@@ -1,124 +1,125 @@
+import 'dart:ffi';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const StudyMonApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StudyMonApp extends StatelessWidget {
+  const StudyMonApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
+    return MaterialApp(
+      theme: ThemeData(
           useMaterial3: true,
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 196, 26, 26)),
-        ),
-        home: const MyHomePage(),
-      ),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Color.fromARGB(176, 255, 15, 15))),
+      home: const StudyMonStatefulWidget(),
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
+class StudyMonStatefulWidget extends StatefulWidget {
+  const StudyMonStatefulWidget({super.key});
 
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    print(favorites);
-    notifyListeners();
-  }
+  @override
+  State<StudyMonStatefulWidget> createState() => _StudyMonState();
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class _StudyMonState extends State<StudyMonStatefulWidget> {
+  int currentPageIndex = 0;
+  var pages = <Text>[
+    const Text("Current session"),
+    const Text("Egg-Dex"),
+    const Text("Settings & Stats"),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    void nextButton() {
-      appState.getNext();
-    }
-
-    void favButton() {
-      appState.toggleFavorite();
-    }
-
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigCard(pair: pair),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: nextButton,
-                  child: const Text('next'),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                  onPressed: favButton,
-                  child: const Text('favorite'),
-                )
-              ],
-            ),
-            // const Padding(padding: EdgeInsets.all(200.0))
-          ],
-        ),
+      appBar: AppBar(
+        title: pages[currentPageIndex],
+        // backgroundColor: ,
       ),
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.egg),
+            label: 'Egg-Dex',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Stats',
+          ),
+        ],
+      ),
+      body: <Widget>[
+        const HomePageWidget(),
+        const EggDexWidget(),
+        const SettingsStatsWidget(),
+      ][currentPageIndex],
     );
   }
 }
 
-class BigCard extends StatelessWidget {
-  const BigCard({
+class HomePageWidget extends StatelessWidget {
+  const HomePageWidget({
     super.key,
-    required this.pair,
   });
-
-  final WordPair pair;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
+    return Container(
+      color: theme.colorScheme.inversePrimary,
+      alignment: Alignment.center,
+      child: const Text('Page 1'),
     );
+  }
+}
 
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(
-          "${pair.first} ${pair.second}",
-          // pair.asLowerCase,
-          style: style,
-        ),
-      ),
+class EggDexWidget extends StatelessWidget {
+  const EggDexWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      color: theme.colorScheme.inversePrimary,
+      alignment: Alignment.center,
+      child: const Text('Page 2'),
+    );
+  }
+}
+
+class SettingsStatsWidget extends StatelessWidget {
+  const SettingsStatsWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      color: theme.colorScheme.inversePrimary,
+      alignment: Alignment.center,
+      child: const Text('Page 3'),
     );
   }
 }
