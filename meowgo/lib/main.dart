@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 import 'dart:convert';
 
 import 'package:english_words/english_words.dart';
@@ -151,11 +151,6 @@ class EggDexWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Page 2'),
-                ElevatedButton(
-                  onPressed: fetchData,
-                  child: const Text('Fetch Data'),
-                ),
                 if (pokemonList.isNotEmpty)
                   Expanded(
                     child: ListView.builder(
