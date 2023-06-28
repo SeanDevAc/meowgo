@@ -18,7 +18,7 @@ class StudyMonApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Color.fromARGB(174, 255, 15, 15))),
+              seedColor: const Color.fromARGB(174, 255, 15, 15))),
       home: const StudyMonStatefulWidget(),
     );
   }
@@ -93,7 +93,7 @@ class HomePageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold();
+    return const Scaffold();
 
     // Container(
     //   color: theme.colorScheme.inversePrimary,
@@ -194,9 +194,9 @@ class EggDexWidget extends StatelessWidget {
       future: fetchData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Failed to load data'));
+          return const Center(child: Text('Failed to load data'));
         } else {
           final pokemonList = snapshot.data!;
           final theme = Theme.of(context);
