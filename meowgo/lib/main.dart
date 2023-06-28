@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import 'settings-widget.dart';
+import 'settings-page-widget.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
