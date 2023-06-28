@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
-import 'package:english_words/english_words.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'settings-widget.dart';
 
 void main() {
   runApp(const StudyMonApp());
@@ -28,6 +27,13 @@ class StudyMonStatefulWidget extends StatefulWidget {
 
   @override
   State<StudyMonStatefulWidget> createState() => _StudyMonState();
+}
+
+class TimerStatefulWidget extends StatefulWidget {
+  const TimerStatefulWidget({super.key});
+
+  @override
+  State<TimerStatefulWidget> createState() => _TimerWidget();
 }
 
 class _StudyMonState extends State<StudyMonStatefulWidget> {
@@ -84,10 +90,59 @@ class HomePageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      color: theme.colorScheme.inversePrimary,
-      alignment: Alignment.center,
-      child: const Text('Page 1'),
+
+    return Scaffold();
+
+    // Container(
+    //   color: theme.colorScheme.inversePrimary,
+    //   alignment: Alignment.center,
+
+    //   // child: const Text('Page 1'),
+  }
+}
+
+class _TimerWidget extends State<TimerStatefulWidget> {
+  //init stopwatch instance
+  final Stopwatch _stopwatch = Stopwatch();
+  late Timer _timer;
+
+  String _result = '00:00:00';
+
+  void _start() {
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) {
+      //setState voor UI update
+      setState(() {
+        //format result
+        _result =
+            '${_stopwatch.elapsed.inMinutes.toString().padLeft(2, '0')}:${(_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
+      });
+    });
+    _stopwatch.start();
+  }
+
+  void _stop() {
+    _timer.cancel();
+    _stopwatch.stop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: Column(
+        children: [
+          Text(_result),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(onPressed: _start, child: const Text('start')),
+            ],
+          )
+        ],
+      )),
     );
   }
 }
@@ -104,22 +159,6 @@ class EggDexWidget extends StatelessWidget {
       color: theme.colorScheme.inversePrimary,
       alignment: Alignment.center,
       child: const Text('Page 2'),
-    );
-  }
-}
-
-class SettingsStatsWidget extends StatelessWidget {
-  const SettingsStatsWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      color: theme.colorScheme.inversePrimary,
-      alignment: Alignment.center,
-      child: const Text('Page 3'),
     );
   }
 }
