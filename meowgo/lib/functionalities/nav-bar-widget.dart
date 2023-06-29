@@ -1,12 +1,10 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-
 import '../main-views/home-page-widget.dart';
 import '../main-views/settings-page-widget.dart';
-import '../main-views/eggdex-page-widget.dart';
+import '../main-views/eggdex_page_widget.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
-  const StudyMonStatefulWidget({super.key});
+  const StudyMonStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<StudyMonStatefulWidget> createState() => _StudyMonState();
@@ -25,33 +23,32 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: pages[currentPageIndex],
-        // backgroundColor: ,
       ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
+        currentIndex: currentPageIndex,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.egg),
             label: 'Egg-Dex',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Stats',
           ),
         ],
       ),
       body: <Widget>[
-        const HomePageWidget(),
-        const EggDexWidget(),
+        HomePage(),
+        EggDexWidget(),
         const SettingsStatsWidget(),
       ][currentPageIndex],
     );
