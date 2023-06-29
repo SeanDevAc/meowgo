@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import './timer-widget.dart';
+
 import '../main-views/home-page-widget.dart';
 import '../main-views/settings-page-widget.dart';
 import '../main-views/eggdex-page-widget.dart';
@@ -24,7 +26,9 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: pages[currentPageIndex],
+        title: const Row(
+          children: [TimerStatefulWidget()],
+        ),
         // backgroundColor: ,
       ),
       bottomNavigationBar: NavigationBar(

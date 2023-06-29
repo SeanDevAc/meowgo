@@ -15,8 +15,13 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final timeNeeded = 5;
 
   String _result = '00:00';
+  bool _isRunning = false;
 
   void _start() {
+    setState(() {
+      _isRunning = true;
+    });
+
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (Timer t) {
       //setState voor UI update
       setState(() {
@@ -32,32 +37,48 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   }
 
   void _stop() {
+    setState(() {
+      _isRunning = false;
+    });
     _timer.cancel();
     _stopwatch.stop();
   }
 
   void _enoughTimeElapsed() {
     print('hoi');
+// als wekkerfunctie aanstaat, komt er een wekker en 10 creds erbij
+// als silent aanstaat, krijg je gewoon 10 creds erbij. timer gaat door
+//
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Column(
-        children: [
-          Text(_result),
-          const SizedBox(
-            height: 20.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(onPressed: _start, child: const Text('start')),
-            ],
-          )
-        ],
-      )),
-    );
+    return timerView();
   }
+
+  Row timerView() {
+    return Row(children: [
+      Text(
+        _result,
+        // style: TextStyle(
+        //     color: Color.fromARGB(0, 240, 5, 5),
+        //     backgroundColor: Color.fromARGB(245, 243, 3, 3)),
+      ),
+      const SizedBox(
+        width: 10,
+      ),
+      startStopButton(),
+    ]);
+  }
+
+  ElevatedButton startStopButton() => ElevatedButton(
+      onPressed: _isRunning ? _stop : _start,
+      style: ButtonStyle(
+          backgroundColor: _isRunning
+              ? const MaterialStatePropertyAll<Color>(Colors.redAccent)
+              : const MaterialStatePropertyAll<Color>(Colors.green),
+          foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white)),
+      child: Text(
+        _isRunning ? 'pause' : 'start',
+      ));
 }
