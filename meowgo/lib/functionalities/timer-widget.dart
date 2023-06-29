@@ -12,16 +12,20 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   //init stopwatch instance
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
+  final timeNeeded = 5;
 
-  String _result = '00:00:00';
+  String _result = '00:00';
 
   void _start() {
-    _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) {
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (Timer t) {
       //setState voor UI update
       setState(() {
         //format result
         _result =
             '${_stopwatch.elapsed.inMinutes.toString().padLeft(2, '0')}:${(_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
+        if (_stopwatch.elapsed.inSeconds % timeNeeded == 0) {
+          _enoughTimeElapsed();
+        }
       });
     });
     _stopwatch.start();
@@ -30,6 +34,10 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void _stop() {
     _timer.cancel();
     _stopwatch.stop();
+  }
+
+  void _enoughTimeElapsed() {
+    print('hoi');
   }
 
   @override
