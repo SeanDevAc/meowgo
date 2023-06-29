@@ -1,11 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../component/pokemon_db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import '../functionalities/pokemonAPI-widget.dart';
 import './eggdex_page_widget.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +45,8 @@ class HomePage extends StatelessWidget {
 
     while (randomPokemonList.length < 4) {
       final randomPokemonNumber = generateRandomNumber(20);
-      final pokemon = await PokeApiWidget.fetchPokemonByNumber(randomPokemonNumber);
+      final pokemon =
+          await PokeApiWidget.fetchPokemonByNumber(randomPokemonNumber);
 
       randomPokemonList.add(pokemon);
     }

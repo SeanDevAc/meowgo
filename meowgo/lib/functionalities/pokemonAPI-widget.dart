@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:meowgo/component/pokemon_db_helper.dart';
 import '../component/pokemon.dart';
 
 class PokeApiWidget {
@@ -17,14 +18,26 @@ class PokeApiWidget {
         var pokemon = results[i];
         var details = await fetchPokemonDetails(pokemon['url']);
 
-        pokemonList.add(Pokemon(
+        // pokemonList.add(Pokemon(
+        //   name: pokemon['name'],
+        //   url: pokemon['url'],
+        //   imageUrl: details['sprites']['front_default'],
+        //   type: details['types'][0]['type']['name'],
+        //   unlocked: true,
+        //   pokemonNumber: i + 1,
+        // ));
+
+        pokemon = Pokemon(
           name: pokemon['name'],
           url: pokemon['url'],
           imageUrl: details['sprites']['front_default'],
           type: details['types'][0]['type']['name'],
           unlocked: true,
           pokemonNumber: i + 1,
-        ));
+        );
+
+        PokemonDatabaseHelper().insertPokemon(pokemon);
+        pokemonList.add(pokemon);
       }
 
       return pokemonList;
@@ -44,23 +57,27 @@ class PokeApiWidget {
   }
 
   static Future<Pokemon> fetchPokemonByNumber(int pokemonNumber) async {
-    var url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$pokemonNumber');
-    var response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      var pokemon = Pokemon(
-        name: data['name'],
-        url: url.toString(),
-        imageUrl: data['sprites']['front_default'],
-        type: data['types'][0]['type']['name'],
-        unlocked: true,
-        pokemonNumber: pokemonNumber,
-      );
-
-      return pokemon;
-    } else {
-      throw Exception('Failed to fetch Pokemon: ${response.statusCode}');
-    }
+    return PokemonDatabaseHelper().getPokemonByNumber(pokemonNumber);
   }
+
+  // static Future<Pokemon> fetchPokemonByNumbe(int pokemonNumber) async {
+  //   var url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$pokemonNumber');
+  //   var response = await http.get(url);
+
+  //   if (response.statusCode == 200) {
+  //     var data = json.decode(response.body);
+  //     var pokemon = Pokemon(
+  //       name: data['name'],
+  //       url: url.toString(),
+  //       imageUrl: data['sprites']['front_default'],
+  //       type: data['types'][0]['type']['name'],
+  //       unlocked: true,
+  //       pokemonNumber: pokemonNumber,
+  //     );
+
+  //     return pokemon;
+  //   } else {
+  //     throw Exception('Failed to fetch Pokemon: ${response.statusCode}');
+  //   }
+  // }
 }
