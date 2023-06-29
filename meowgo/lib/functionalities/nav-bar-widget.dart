@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 import './timer-widget.dart';
@@ -8,7 +7,7 @@ import '../main-views/settings-page-widget.dart';
 import '../main-views/eggdex-page-widget.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
-  const StudyMonStatefulWidget({super.key});
+  const StudyMonStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<StudyMonStatefulWidget> createState() => _StudyMonState();
@@ -30,23 +29,23 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         leading: const TimerStatefulWidget(),
         leadingWidth: 80.0,
       ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
+        currentIndex: currentPageIndex,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.egg),
             label: 'Egg-Dex',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Stats',
           ),
@@ -55,6 +54,8 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
       body: <Widget>[
         const HomePageWidget(),
         const EggDexWidget(),
+        HomePageWidget(),
+        EggDexWidget(),
         const SettingsStatsWidget(),
       ][currentPageIndex],
     );
