@@ -4,7 +4,7 @@ import './timer-widget.dart';
 
 import '../main-views/home-page-widget.dart';
 import '../main-views/settings-page-widget.dart';
-import '../main-views/eggdex-page-widget.dart';
+import '../main-views/eggdex_page_widget.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
   const StudyMonStatefulWidget({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class StudyMonStatefulWidget extends StatefulWidget {
 class _StudyMonState extends State<StudyMonStatefulWidget> {
   int currentPageIndex = 0;
   var pages = <Text>[
-    const Text("Current session"),
+    const Text("Party"),
     const Text("Egg-Dex"),
     const Text("Settings & Stats"),
   ];
@@ -52,10 +52,8 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         ],
       ),
       body: <Widget>[
-        const HomePageWidget(),
+        HomePage(),
         const EggDexWidget(),
-        HomePageWidget(),
-        EggDexWidget(),
         const SettingsStatsWidget(),
       ][currentPageIndex],
     );
