@@ -26,10 +26,9 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
-          children: [TimerStatefulWidget()],
-        ),
-        // backgroundColor: ,
+        title: pages[currentPageIndex],
+        leading: const TimerStatefulWidget(),
+        leadingWidth: 80.0,
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
