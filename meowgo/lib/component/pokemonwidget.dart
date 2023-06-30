@@ -11,59 +11,61 @@ class PokemonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool unlocked = false;
-    if (pokemon.unlocked == 1) {
-      unlocked = true;
-    } else {
-      unlocked = false;
-    }
-    final name =
-        unlocked ? capitalizeFirstLetter(pokemon.name) : 'Undiscovered';
+    final name = capitalizeFirstLetter(pokemon.name);
     final backgroundColor = getColorForType(pokemon.type);
+    bool isPokemonLocked(Pokemon pokemon) {
+      if (pokemon.unlocked == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    final isLocked = isPokemonLocked(pokemon);
 
     return Container(
       color: backgroundColor,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        elevation: 2.0,
-        child: Column(
-          children: [
-            Expanded(
-              child: unlocked
-                  ? Image.network(
-                      pokemon.imageUrl,
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(Icons.help_outline,
-                      size: 80.0), // Display question mark icon
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    '#${pokemon.pokemonNumber}',
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+      child: Visibility(
+          visible: isLocked,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          elevation: 2.0,
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.network(
+                  pokemon.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '#${pokemon.pokemonNumber}',
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }

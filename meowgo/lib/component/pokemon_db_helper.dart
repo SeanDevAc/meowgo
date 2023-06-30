@@ -1,3 +1,4 @@
+
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
@@ -86,6 +87,16 @@ class PokemonDatabaseHelper {
       where: '$columnPokemonNumber = ?',
       whereArgs: [pokemonNumber],
     );
+
+    if (maps.isEmpty) {
+      return Pokemon(
+          name: 'name',
+          url: 'url',
+          imageUrl: 'imageUrl',
+          pokemonNumber: 2,
+          type: '',
+          unlocked: 1);
+    }
 
     return Pokemon(
       name: maps[0][columnName],

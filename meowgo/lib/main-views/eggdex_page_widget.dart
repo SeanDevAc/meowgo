@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../component/pokemon_db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
-import '../functionalities/pokemonAPI-widget.dart';
+// import '../functionalities/pokemonAPI-widget.dart';
 
 class EggDexWidget extends StatefulWidget {
   const EggDexWidget({Key? key}) : super(key: key);
@@ -129,7 +129,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                 child: Stack(
                   children: [
                     Container(
-                      width: 200,
+                      width: 2000,
                       margin: const EdgeInsets.all(8.0),
                       child: PokemonWidget(pokemon: pokemon),
                     ),

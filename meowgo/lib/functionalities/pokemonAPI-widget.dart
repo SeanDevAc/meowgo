@@ -32,7 +32,7 @@ class PokeApiWidget {
           url: pokemon['url'],
           imageUrl: details['sprites']['front_default'],
           type: details['types'][0]['type']['name'],
-          unlocked: 1,
+          unlocked: i < 3? 1 : 0,
           pokemonNumber: i + 1,
         );
 
