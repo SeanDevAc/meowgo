@@ -3,17 +3,22 @@ import 'package:path/path.dart';
 import 'pokemon.dart';
 
 class PokemonDatabaseHelper {
-  static const _databaseName = 'pokemon_database.db';
-  static const _databaseVersion = 1;
+  final _databaseName = 'pokemon_database1.db';
+  final _databaseVersion = 2;
 
-  static const table = 'pokemon_table';
-  static const columnId = 'id';
-  static const columnName = 'name';
-  static const columnUrl = 'url';
-  static const columnImageUrl = 'imageUrl';
-  static const columnType = 'type';
-  static const columnUnlocked = 'unlocked';
-  static const columnPokemonNumber = 'pokemonNumber';
+  final table = 'pokemon_table';
+  final columnId = 'id';
+  final columnName = 'name';
+  final columnUrl = 'url';
+  final columnImageUrl = 'imageUrl';
+  final columnType = 'type';
+  final columnUnlocked = 'unlocked';
+  final columnPokemonNumber = 'pokemonNumber';
+
+  final inventoryTable = 'inventory_table';
+  final inventoryId = 'id';
+  final inventoryDescription = 'description';
+  final inventoryAmount = 'amount';
 
   static Database? _database;
 
@@ -29,6 +34,7 @@ class PokemonDatabaseHelper {
   Future<void> nukeDatabase() async {
     final db = await database;
     await db.delete(table);
+    await db.delete(inventoryTable);
   }
 
   Future<Database> _initDatabase() async {
@@ -36,18 +42,8 @@ class PokemonDatabaseHelper {
     final databasePath = join(path, _databaseName);
 
     return await openDatabase(databasePath, version: _databaseVersion,
-        onCreate: (db, version) {
-      return db.execute('''
-          CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
-            $columnName TEXT,
-            $columnUrl TEXT,
-            $columnImageUrl TEXT,
-            $columnType TEXT,
-            $columnUnlocked INTEGER,
-            $columnPokemonNumber INTEGER
-          )
-        ''');
+        onCreate: (db, version) async {
+      _createDb(db);
     });
   }
 
@@ -82,6 +78,16 @@ class PokemonDatabaseHelper {
       whereArgs: [pokemonNumber],
     );
 
+    if (maps.isEmpty) {
+      return Pokemon(
+          name: 'name',
+          url: 'url',
+          imageUrl: 'imageUrl',
+          pokemonNumber: 2,
+          type: '',
+          unlocked: 1);
+    }
+
     return Pokemon(
       name: maps[0][columnName],
       url: maps[0][columnUrl],
@@ -90,5 +96,54 @@ class PokemonDatabaseHelper {
       unlocked: maps[0][columnUnlocked],
       pokemonNumber: maps[0][columnPokemonNumber],
     );
+  }
+
+  Future<void> addEggs(int eggAmount) async {
+    final db = await database;
+
+    await db.execute('''
+      UPDATE $inventoryTable 
+      SET $inventoryAmount = $inventoryAmount + $eggAmount
+      WHERE $inventoryId = 0
+''');
+  }
+
+  Future<int> getEggAmount() async {
+    final db = await database;
+    final List<Map<String, Object?>> maps = await db.query(
+      inventoryTable,
+      where: '$inventoryId = ?',
+      whereArgs: [0],
+    );
+
+    if (maps.isEmpty) {
+      return 0;
+    }
+
+    final amount = maps[0]['amount'] as int;
+    print(amount);
+    return amount;
+  }
+
+  void _createDb(Database db) async {
+    final db = await database;
+    await db.execute('''
+          CREATE TABLE $inventoryTable (
+            $inventoryId INTEGER PRIMARY KEY,
+            $inventoryDescription TEXT,
+            $inventoryAmount INTEGER
+          )
+          ''');
+    await db.execute('''
+          CREATE TABLE $table (
+            $columnId INTEGER PRIMARY KEY,
+            $columnName TEXT,
+            $columnUrl TEXT,
+            $columnImageUrl TEXT,
+            $columnType TEXT,
+            $columnUnlocked INTEGER,
+            $columnPokemonNumber INTEGER
+          )
+        ''');
   }
 }

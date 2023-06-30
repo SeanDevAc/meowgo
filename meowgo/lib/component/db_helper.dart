@@ -1,18 +1,19 @@
 import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
+import 'package:meowgo/component/pokemon_db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'pokemon_database.db';
-  static const _databaseVersion = 1;
+  final _databaseName = 'pokemon_database.db';
+  final _databaseVersion = 1;
 
-  static const table = 'inventory_table';
-  static const id = 'id';
-  static const description = 'description';
-  static const amount = 'amount';
+  final table = 'inventory_table';
+  final id = 'id';
+  final description = 'description';
+  final amount = 'amount';
 
   static Database? _database;
 
@@ -47,24 +48,19 @@ class DatabaseHelper {
   }
 
   Future<void> addEggs(int eggAmount) async {
-    final db = await database;
-
-    await db.execute('''
-      UPDATE $table 
-      SET $amount = $amount + $eggAmount
-      WHERE $id = 0
-''');
+    PokemonDatabaseHelper().addEggs(eggAmount);
   }
 
   Future<int> getEggAmount() async {
-    final db = await database;
-    final List<Map<String, Object?>> maps = await db.query(
-      table,
-      where: '$id = ?',
-      whereArgs: [0],
-    );
+    // final db = await database;
+    // final List<Map<String, Object?>> maps = await db.query(
+    //   table,
+    //   where: '$id = ?',
+    //   whereArgs: [0],
+    // );
 
-    final amount = maps[0]['amount'] as int;
-    return amount;
+    // final amount = maps[0]['amount'] as int;
+
+    return PokemonDatabaseHelper().getEggAmount();
   }
 }

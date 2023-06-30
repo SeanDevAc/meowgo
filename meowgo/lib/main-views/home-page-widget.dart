@@ -13,19 +13,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: () => DatabaseHelper().addEggs(1),
+    return Column(
+      children: [
+        SizedBox(
+          height: 100,
+          child: TextButton(
+            onPressed: () => PokemonDatabaseHelper().addEggs(1),
             style: const ButtonStyle(
               minimumSize: MaterialStatePropertyAll(Size(90, 40)),
             ),
-            child: const Text('hoi'),
+            child: Text('${
+                //PokemonDatabaseHelper().getPokemonByNumber(1)
+                PokemonDatabaseHelper().getEggAmount()}'),
           ),
-          partyPokemonList(),
-        ],
-      ),
+        ),
+        SizedBox(height: 400, child: partyPokemonList()),
+      ],
     );
   }
 
