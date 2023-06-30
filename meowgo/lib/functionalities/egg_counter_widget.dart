@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import '../component/db_helper.dart';
+import 'dart:async';
 
-class EggCounterWidget extends StatelessWidget {
+class EggCounterStateful extends StatefulWidget {
+  const EggCounterStateful({super.key});
+
+  @override
+  State<EggCounterStateful> createState() => _EggCounterWidget();
+}
+
+class _EggCounterWidget extends State<EggCounterStateful> {
   int _eggAmount = 0;
 
   void getEggAmount() async {
