@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
 
@@ -26,6 +27,9 @@ class PokemonDatabaseHelper {
     if (_database != null) {
       return _database!;
     }
+
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
