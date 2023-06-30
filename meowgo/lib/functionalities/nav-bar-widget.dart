@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meowgo/functionalities/egg_counter_widget.dart';
 import 'package:meowgo/functionalities/pokemonAPI-widget.dart';
 
 import './timer-widget.dart';
@@ -37,6 +38,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         title: pages[currentPageIndex],
         leading: const TimerStatefulWidget(),
         leadingWidth: 80.0,
+        actions: [EggCounterWidget()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {

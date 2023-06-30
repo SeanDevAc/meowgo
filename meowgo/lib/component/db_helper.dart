@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -56,11 +58,13 @@ class DatabaseHelper {
 
   Future<int> getEggAmount() async {
     final db = await database;
-    Future<List<Map<String, Object?>>> _result = db.rawQuery('''
-      SELECT $amount 
-      FROM $table
-      WHERE $id = 0
-''');
-    return 2;
+    final List<Map<String, Object?>> maps = await db.query(
+      table,
+      where: '$id = ?',
+      whereArgs: [0],
+    );
+
+    final amount = maps[0]['amount'] as int;
+    return amount;
   }
 }
