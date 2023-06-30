@@ -73,7 +73,7 @@ class PokemonDatabaseHelper {
         url: maps[index][columnUrl],
         imageUrl: maps[index][columnImageUrl],
         type: maps[index][columnType],
-        unlocked: maps[index][columnUnlocked] == 1,
+        unlocked: maps[index][columnUnlocked],
         pokemonNumber: maps[index][columnPokemonNumber],
       );
     });
@@ -92,7 +92,7 @@ class PokemonDatabaseHelper {
       url: maps[0][columnUrl],
       imageUrl: maps[0][columnImageUrl],
       type: maps[0][columnType],
-      unlocked: maps[0][columnUnlocked] == 1,
+      unlocked: maps[0][columnUnlocked],
       pokemonNumber: maps[0][columnPokemonNumber],
     );
   }
