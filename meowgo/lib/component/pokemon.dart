@@ -14,4 +14,15 @@ class Pokemon {
     required this.unlocked,
     required this.pokemonNumber,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'url': url,
+      'imageUrl': imageUrl,
+      'type': type,
+      'unlocked': unlocked,
+      'pokemonNumber': pokemonNumber,
+    };
+  }
 }

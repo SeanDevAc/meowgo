@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../component/pokemon_db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import '../functionalities/pokemonAPI-widget.dart';
@@ -7,7 +8,7 @@ class EggDexWidget extends StatefulWidget {
   const EggDexWidget({Key? key}) : super(key: key);
 
   @override
-  _EggDexWidgetState createState() => _EggDexWidgetState();
+  State<EggDexWidget> createState() => _EggDexWidgetState();
 }
 
 class _EggDexWidgetState extends State<EggDexWidget> {
@@ -23,12 +24,20 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   }
 
   Future<void> fetchAllPokemon() async {
-    final pokemonList = await PokeApiWidget.fetchAllPokemon();
+    final pokemonList = await PokemonDatabaseHelper().getAllPokemon();
     setState(() {
       allPokemonList = pokemonList;
       filteredPokemonList = pokemonList;
     });
   }
+
+  // Future<void> fetchAllPokemo() async {
+  //   final pokemonList = await PokeApiWidget.fetchAllPokemon();
+  //   setState(() {
+  //     allPokemonList = pokemonList;
+  //     filteredPokemonList = pokemonList;
+  //   });
+  // }
 
   void filterPokemon(String searchQuery) {
     if (searchQuery.isEmpty) {
@@ -129,7 +138,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                         child: Container(
                           color: Colors.black54,
                           alignment: Alignment.center,
-                          child: Icon(
+                          child: const Icon(
                             Icons.check,
                             size: 16.0,
                             color: Colors.white,
