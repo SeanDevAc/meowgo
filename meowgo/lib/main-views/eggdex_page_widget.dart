@@ -120,6 +120,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                 child: Stack(
                   children: [
                     Container(
+                      width: 200,
                       margin: const EdgeInsets.all(8.0),
                       child: PokemonWidget(pokemon: pokemon),
                     ),
