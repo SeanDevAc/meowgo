@@ -5,6 +5,8 @@ import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import '../functionalities/pokemonAPI-widget.dart';
 import './eggdex_page_widget.dart';
+import '../functionalities/egg_counter_widget.dart';
+import '../component/db_helper.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,31 +14,46 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Pokemon>>(
-        future: fetchRandomPokemon(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Failed to load data'));
-          } else {
-            final pokemonList = snapshot.data!;
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: pokemonList.length,
-              itemBuilder: (context, index) {
-                final pokemon = pokemonList[index];
-                return Container(
-                  margin: const EdgeInsets.all(8.0),
-                  child: PokemonWidget(pokemon: pokemon),
-                );
-              },
-            );
-          }
-        },
+      body: Column(
+        children: [
+          TextButton(
+            onPressed: () => DatabaseHelper().addEggs(1),
+            style: const ButtonStyle(
+              minimumSize: MaterialStatePropertyAll(Size(90, 40)),
+            ),
+            child: const Text('hoi'),
+          ),
+          partyPokemonList(),
+        ],
       ),
+    );
+  }
+
+  FutureBuilder<List<Pokemon>> partyPokemonList() {
+    return FutureBuilder<List<Pokemon>>(
+      future: fetchRandomPokemon(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Failed to load data'));
+        } else {
+          final pokemonList = snapshot.data!;
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: pokemonList.length,
+            itemBuilder: (context, index) {
+              final pokemon = pokemonList[index];
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                child: PokemonWidget(pokemon: pokemon),
+              );
+            },
+          );
+        }
+      },
     );
   }
 
