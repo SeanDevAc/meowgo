@@ -9,3 +9,6 @@ meowgo/macos/Runner.xcodeproj/project.pbxproj
 *.xcworkspacedata
 *.pbxproj
 *.xcworkspacedata
+*.yaml
+*.xcworkspacedata
+*.pbxproj
