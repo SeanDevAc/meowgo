@@ -14,7 +14,7 @@ class EggDexWidget extends StatefulWidget {
 class _EggDexWidgetState extends State<EggDexWidget> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
-  List<Pokemon> activePokemonList = [];
+  List<Pokemon> PartyList = [];
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -58,19 +58,19 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   }
 
   void addToInventory(Pokemon pokemon) {
-    if (activePokemonList.length >= 4) {
+    if (PartyList.length >= 4) {
       // Maximum limit reached, show an error message or handle accordingly
       return;
     }
     setState(() {
-      activePokemonList.add(pokemon);
+      PartyList.add(pokemon);
     });
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Pokemon Added'),
-          content: const Text('Pokemon added to inventory.'),
+          title: const Text('Added to Party'),
+          content: const Text('Pokemon added to Party.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -86,12 +86,12 @@ class _EggDexWidgetState extends State<EggDexWidget> {
 
   void removeFromInventory(Pokemon pokemon) {
     setState(() {
-      activePokemonList.remove(pokemon);
+      PartyList.remove(pokemon);
     });
   }
 
   bool isPokemonSelected(Pokemon pokemon) {
-    return activePokemonList.contains(pokemon);
+    return PartyList.contains(pokemon);
   }
 
   @override
