@@ -11,7 +11,14 @@ class PokemonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = pokemon.unlocked ? capitalizeFirstLetter(pokemon.name) : 'Undiscovered';
+    bool unlocked = false;
+    if (pokemon.unlocked == 1) {
+      unlocked = true;
+    } else {
+      unlocked = false;
+    }
+    final name =
+        unlocked ? capitalizeFirstLetter(pokemon.name) : 'Undiscovered';
     final backgroundColor = getColorForType(pokemon.type);
 
     return Container(
@@ -24,12 +31,13 @@ class PokemonWidget extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: pokemon.unlocked
+              child: unlocked
                   ? Image.network(
                       pokemon.imageUrl,
                       fit: BoxFit.cover,
                     )
-                  : const Icon(Icons.help_outline, size: 80.0), // Display question mark icon
+                  : const Icon(Icons.help_outline,
+                      size: 80.0), // Display question mark icon
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

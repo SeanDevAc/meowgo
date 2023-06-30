@@ -3,7 +3,7 @@ class Pokemon {
   final String url;
   final String imageUrl;
   final String type;
-  final bool unlocked;
+  final int unlocked;
   final int pokemonNumber;
 
   Pokemon({
