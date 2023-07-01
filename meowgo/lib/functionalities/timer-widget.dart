@@ -21,9 +21,39 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  Duration _duration = const Duration(minutes: 0);
+  Duration _targetDuration = const Duration(seconds: 4);
+  Duration _duration = const Duration(seconds: 4);
   String _result = "01:00";
   bool _isRunning = false;
+
+  bool isHatchingEgg = false;
+
+  void _hatchingChoiceDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Which one?'),
+            content: const Text('Find or hatch?'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    isHatchingEgg = false;
+                    _start();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Find')),
+              TextButton(
+                  onPressed: () {
+                    isHatchingEgg = true;
+                    _start();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Hatch'))
+            ],
+          );
+        });
+  }
 
   void _start() {
     setState(() {
@@ -39,8 +69,9 @@ class _TimerWidget extends State<TimerStatefulWidget> {
           _result =
               '${_duration.inMinutes.toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}';
         } else {
-          _stop();
+          _resetTimer(_targetDuration);
           _enoughTimeElapsed();
+          _stop();
         }
       });
     });
@@ -56,21 +87,23 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   }
 
   void _enoughTimeElapsed() {
+    _resetTimer(_targetDuration);
+    print('enough time');
+
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
-        return gotNewPokemonPage();
+        return isHatchingEgg ? const gotNewPokemonPage() : const GotEggPage();
+        // return GotEggPage();
       },
     ));
-
-    _resetTimer(_duration);
   }
 
   void _resetTimer(duration) {
     print("object");
     setState(() {
-      _duration = duration;
+      // _targetDuration = duration;
       _result =
-          '${_duration.inMinutes.toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}';
+          '${_targetDuration.inMinutes.toString().padLeft(2, '0')}:${(_targetDuration.inSeconds % 60).toString().padLeft(2, '0')}';
     });
   }
 
@@ -83,7 +116,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   }
 
   TextButton startStopButton() => TextButton(
-      onPressed: _isRunning ? _stop : _start,
+      onPressed: _isRunning ? _stop : _hatchingChoiceDialog,
       style: ButtonStyle(
           minimumSize: const MaterialStatePropertyAll(Size(90, 40)),
           backgroundColor: _isRunning
