@@ -63,7 +63,7 @@ class DatabaseHelper {
       return;
     }
 
-    print('database is already initialized');
+    // print('database is already initialized');
     return;
   }
 
@@ -172,7 +172,7 @@ class DatabaseHelper {
           )
 
       ''');
-      print('egg table added');
+      // print('egg table added');
       return 0;
     }
 
@@ -194,7 +194,7 @@ class DatabaseHelper {
         INSERT INTO $inventoryTable(
           $inventoryId, $inventoryDescription, $inventoryAmount)
           VALUES(
-            0, 'eggs', 0
+            1, 'steps', 0
           )
 
       ''');
@@ -209,7 +209,7 @@ class DatabaseHelper {
 
   Future<int> updatePokemonUnlocked(int unlockedPokemon) async {
     final db = await database;
-  
+
     await db.execute('''
       UPDATE $table 
       SET $columnUnlocked = 1

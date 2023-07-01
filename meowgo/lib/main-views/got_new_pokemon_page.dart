@@ -38,16 +38,16 @@ class gotNewPokemonPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Congratulations!',
+                const Text(
+                  'Gefeliciteerd!',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  'You have unlocked this pokemon:',
+                const SizedBox(height: 20),
+                const Text(
+                  'Je hebt de volgende Pokémon ontgrendeld:',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Expanded(
                   flex: 1,
                   child: FractionallySizedBox(
@@ -57,7 +57,8 @@ class gotNewPokemonPage extends StatelessWidget {
                       future: getUnlockedPokemon(randomId()),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
-                          return Text('An error occured while loading the pokemon');
+                          return Text(
+                              'An error occured while loading the pokemon');
                         } else if (snapshot.hasData) {
                           return PokemonWidget(pokemon: snapshot.data!);
                         } else {
@@ -66,6 +67,17 @@ class gotNewPokemonPage extends StatelessWidget {
                       },
                     ),
                   ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return StepCountPage();
+                      },
+                    ));
+                  },
+                  child: Text('Gather another egg!'),
                 ),
               ],
             ),

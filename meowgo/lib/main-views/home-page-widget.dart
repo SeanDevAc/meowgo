@@ -1,12 +1,14 @@
 import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:meowgo/functionalities/timer-widget.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import '../functionalities/pokemonAPI-widget.dart';
 import './eggdex_page_widget.dart';
 import '../functionalities/egg_counter_widget.dart';
+import '../functionalities/timer-widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -22,7 +24,9 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 100,
           child: ElevatedButton(
-              onPressed: () => DatabaseHelper().addEggs(1),
+              onPressed: () {
+                DatabaseHelper().addEggs(1);
+              },
               style: const ButtonStyle(),
               child: FutureBuilder(
                   future: DatabaseHelper().getEggAmount(),

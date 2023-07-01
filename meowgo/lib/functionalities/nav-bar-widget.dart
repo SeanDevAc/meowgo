@@ -39,7 +39,6 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         title: pages[currentPageIndex],
         leading: const TimerStatefulWidget(),
         leadingWidth: 80.0,
-        actions: const [EggCounterStateful()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
