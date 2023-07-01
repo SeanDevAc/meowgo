@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meowgo/main-views/step_count_page.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
@@ -27,23 +28,23 @@ class gotNewPokemonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Pokemon Page'),
+        title: const Text('New Pokemon!'),
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            height: 1000,
-            width: 1000,
+            height: MediaQuery.of(context).size.height * 0.8,
+            width: MediaQuery.of(context).size.height * 0.8,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Gefeliciteerd!',
+                  'Congratulations!',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Je hebt de volgende Pokémon ontgrendeld:',
+                  'You have unlocked this pokemon:',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 10),
@@ -56,7 +57,7 @@ class gotNewPokemonPage extends StatelessWidget {
                       future: getUnlockedPokemon(randomId()),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
-                          return Text('Er is een fout opgetreden bij het laden van de Pokémon.');
+                          return Text('An error occured while loading the pokemon');
                         } else if (snapshot.hasData) {
                           return PokemonWidget(pokemon: snapshot.data!);
                         } else {
@@ -65,6 +66,17 @@ class gotNewPokemonPage extends StatelessWidget {
                       },
                     ),
                   ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                        Navigator.push(context, MaterialPageRoute<void>(
+                            return StepCountPage();
+                          },
+                        )
+                      );
+                  },
+                  child: Text('Gather another egg!'),
                 ),
               ],
             ),
