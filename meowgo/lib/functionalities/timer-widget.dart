@@ -21,7 +21,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  Duration _targetDuration = const Duration(seconds: 4);
+  final Duration _targetDuration = const Duration(seconds: 4);
   Duration _duration = const Duration(seconds: 4);
   String _result = "01:00";
   bool _isRunning = false;
@@ -69,7 +69,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
           _result =
               '${_duration.inMinutes.toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}';
         } else {
-          _resetTimer(_targetDuration);
           _enoughTimeElapsed();
           _stop();
         }
@@ -98,12 +97,11 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     ));
   }
 
-  void _resetTimer(duration) {
-    print("object");
+  void _resetTimer(Duration duration) {
     setState(() {
-      // _targetDuration = duration;
+      _duration = duration;
       _result =
-          '${_targetDuration.inMinutes.toString().padLeft(2, '0')}:${(_targetDuration.inSeconds % 60).toString().padLeft(2, '0')}';
+          '${_duration.inMinutes.toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}';
     });
   }
 
