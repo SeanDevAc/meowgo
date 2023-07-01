@@ -7,6 +7,7 @@ import '../main-views/settings-page-widget.dart';
 import 'package:pedometer/pedometer.dart';
 import '../main-views/step_count_page.dart';
 import '../main-views/got_egg_page.dart';
+import '../main-views/got_new_pokemon_page.dart';
 
 class TimerStatefulWidget extends StatefulWidget {
   const TimerStatefulWidget({super.key});
@@ -57,7 +58,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void _enoughTimeElapsed() {
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
-        return StepCountPage();
+        return gotNewPokemonPage();
       },
     ));
 

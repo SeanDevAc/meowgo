@@ -16,7 +16,6 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   List<Pokemon> filteredPokemonList = [];
   List<Pokemon> allUnlockedPokemon = [];
   List<Pokemon> PartyList = [];
-  List<Pokemon> allUnlockedPokemon = [];
   TextEditingController searchController = TextEditingController();
 
   @override

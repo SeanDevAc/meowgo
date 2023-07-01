@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 100,
           child: ElevatedButton(
-              onPressed: () => DatabaseHelper().updateRandomPokemonUnlocked(),
+              onPressed: () => DatabaseHelper().addEggs(1),
               style: const ButtonStyle(),
               child: FutureBuilder(
                   future: DatabaseHelper().getEggAmount(),
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                     if (snapshot.hasData) {
                       return Text('${snapshot.data}');
                     } else {
-                      return const Text('0');
+                      return Text('0');
                     }
                   })
               //PokemonDatabaseHelper().getPokemonByNumber(1)

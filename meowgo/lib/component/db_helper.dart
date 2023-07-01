@@ -6,7 +6,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
 import '../functionalities/egg_counter_widget.dart';
-import 'dart:math';
 
 class DatabaseHelper {
   final _databaseName = 'pokemon_database1.db';
@@ -161,17 +160,17 @@ class DatabaseHelper {
   }
 
 
-  Future<void> updateRandomPokemonUnlocked() async {
+  Future<int> updatePokemonUnlocked(int unlockedPokemon) async {
     final db = await database;
-    int PokemonId = Random().nextInt(151);
-
+  
     await db.execute('''
       UPDATE $table 
       SET $columnUnlocked = 1
-      WHERE $columnPokemonNumber = $PokemonId;
+      WHERE $columnPokemonNumber = $unlockedPokemon;
     ''');
 
-    print('Pokemon unlocked updated successfully: $PokemonId');
+    print('Pokemon unlocked updated successfully: $unlockedPokemon');
+    return unlockedPokemon;
   }
 
   void _createDb(Database db) async {

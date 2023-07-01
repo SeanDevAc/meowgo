@@ -25,7 +25,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
     PokeApiWidget.fetchAllPokemon();
   }
 
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
   var pages = <Text>[
     const Text("Party"),
     const Text("Egg-Dex"),
