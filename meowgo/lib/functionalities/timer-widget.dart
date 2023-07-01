@@ -6,6 +6,7 @@ import 'dart:async';
 import '../main-views/settings-page-widget.dart';
 import 'package:pedometer/pedometer.dart';
 import '../main-views/step_count_page.dart';
+import '../main-views/got_egg_page.dart';
 
 class TimerStatefulWidget extends StatefulWidget {
   const TimerStatefulWidget({super.key});
@@ -56,43 +57,11 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void _enoughTimeElapsed() {
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('My Page'),
-            automaticallyImplyLeading: false,
-          ),
-          body: Column(
-            children: [
-              Center(
-                child: Text("congrats, you got an egg!"),
-              ),
-              Center(
-                child: ElevatedButton(
-                  child: const Text('Extra egg?'),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return StepCountPage();
-                    }));
-                  },
-                ),
-              ),
-              Center(
-                child: TextButton(
-                  child: const Text('Collect Egg'),
-                  onPressed: () => DatabaseHelper().addEggs(1),
-                ),
-              )
-            ],
-          ),
-        );
+        return StepCountPage();
       },
     ));
 
     _resetTimer(_duration);
-// als wekkerfunctie aanstaat, komt er een wekker en 10 creds erbij
-// als silent aanstaat, krijg je gewoon 10 creds erbij. timer gaat door
-//
   }
 
   void _resetTimer(duration) {

@@ -14,6 +14,7 @@ class EggDexWidget extends StatefulWidget {
 class _EggDexWidgetState extends State<EggDexWidget> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
+  List<Pokemon> allUnlockedPokemon = [];
   List<Pokemon> PartyList = [];
   TextEditingController searchController = TextEditingController();
 
@@ -28,6 +29,14 @@ class _EggDexWidgetState extends State<EggDexWidget> {
     setState(() {
       allPokemonList = pokemonList;
       filteredPokemonList = pokemonList;
+    });
+  }
+
+  Future<void> fetchUnlockedPokemon() async {
+    final unlockedPokemonList = await DatabaseHelper().getUnlockedPokemon();
+    setState(() {
+      allUnlockedPokemon = unlockedPokemonList;
+      filteredPokemonList = unlockedPokemonList;
     });
   }
 

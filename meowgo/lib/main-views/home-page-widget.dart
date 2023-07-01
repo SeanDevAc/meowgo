@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                     if (snapshot.hasData) {
                       return Text('${snapshot.data}');
                     } else {
-                      return Text('0');
+                      return const Text('0');
                     }
                   })
               //PokemonDatabaseHelper().getPokemonByNumber(1)

@@ -78,6 +78,23 @@ class DatabaseHelper {
     });
   }
 
+  Future<List<Pokemon>> getUnlockedPokemon() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query(table, where: '$columnUnlocked = ?', whereArgs: [1]);
+
+    return List.generate(maps.length, (index) {
+      return Pokemon(
+        name: maps[index][columnName],
+        url: maps[index][columnUrl],
+        imageUrl: maps[index][columnImageUrl],
+        type: maps[index][columnType],
+        unlocked: maps[index][columnUnlocked],
+        pokemonNumber: maps[index][columnPokemonNumber],
+      );
+    });
+  }
+
   Future<Pokemon> getPokemonByNumber(int pokemonNumber) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(

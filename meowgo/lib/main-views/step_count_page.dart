@@ -21,6 +21,7 @@ class _StepCountPageState extends State<StepCountPage> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _status = '?', _steps = '?';
+  final int targetSteps = 10;
 
   @override
   void initState() {
@@ -77,12 +78,27 @@ class _StepCountPageState extends State<StepCountPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Take 20 steps!!'),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text('Congrats!'),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text(
+                "You got an egg!\nnow take $targetSteps steps for another egg!",
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 60,
+              ),
               const Text(
                 'Steps Taken',
                 style: TextStyle(fontSize: 30),
