@@ -67,17 +67,6 @@ class gotNewPokemonPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                        Navigator.push(context, MaterialPageRoute<void>(
-                            return StepCountPage();
-                          },
-                        )
-                      );
-                  },
-                  child: Text('Gather another egg!'),
-                ),
               ],
             ),
           ),
