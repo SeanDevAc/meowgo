@@ -15,12 +15,13 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
   List<Pokemon> PartyList = [];
+  List<Pokemon> allUnlockedPokemon = [];
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    fetchAllPokemon();
+    fetchUnlockedPokemon();
   }
 
   Future<void> fetchAllPokemon() async {
@@ -28,6 +29,14 @@ class _EggDexWidgetState extends State<EggDexWidget> {
     setState(() {
       allPokemonList = pokemonList;
       filteredPokemonList = pokemonList;
+    });
+  }
+
+  Future<void> fetchUnlockedPokemon() async {
+    final unlockedPokemonList = await DatabaseHelper().getUnlockedPokemon();
+    setState(() {
+      allUnlockedPokemon = unlockedPokemonList;
+      filteredPokemonList = unlockedPokemonList;
     });
   }
 
@@ -56,6 +65,8 @@ class _EggDexWidgetState extends State<EggDexWidget> {
       });
     }
   }
+
+
 
   void addToInventory(Pokemon pokemon) {
     if (PartyList.length >= 4) {

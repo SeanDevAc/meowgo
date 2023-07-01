@@ -6,6 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
 import '../functionalities/egg_counter_widget.dart';
+import 'dart:math';
 
 class DatabaseHelper {
   final _databaseName = 'pokemon_database1.db';
@@ -32,8 +33,8 @@ class DatabaseHelper {
       return _database!;
     }
 
-    // sqfliteFfiInit();
-    // databaseFactory = databaseFactoryFfi;
+     sqfliteFfiInit();
+     databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -65,6 +66,23 @@ class DatabaseHelper {
   Future<List<Pokemon>> getAllPokemon() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(table);
+
+    return List.generate(maps.length, (index) {
+      return Pokemon(
+        name: maps[index][columnName],
+        url: maps[index][columnUrl],
+        imageUrl: maps[index][columnImageUrl],
+        type: maps[index][columnType],
+        unlocked: maps[index][columnUnlocked],
+        pokemonNumber: maps[index][columnPokemonNumber],
+      );
+    });
+  }
+
+  Future<List<Pokemon>> getUnlockedPokemon() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query(table, where: '$columnUnlocked = ?', whereArgs: [1]);
 
     return List.generate(maps.length, (index) {
       return Pokemon(
@@ -140,6 +158,20 @@ class DatabaseHelper {
     final amount = maps[0]['amount'] as int;
     print(amount);
     return amount;
+  }
+
+
+  Future<void> updateRandomPokemonUnlocked() async {
+    final db = await database;
+    int PokemonId = Random().nextInt(151);
+
+    await db.execute('''
+      UPDATE $table 
+      SET $columnUnlocked = 1
+      WHERE $columnPokemonNumber = $PokemonId;
+    ''');
+
+    print('Pokemon unlocked updated successfully: $PokemonId');
   }
 
   void _createDb(Database db) async {
