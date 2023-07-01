@@ -20,7 +20,7 @@ class gotNewPokemonPage extends StatelessWidget {
   }
 
   int randomId() {
-    int unlockedPokemonId = Random().nextInt(151);
+    int unlockedPokemonId = Random().nextInt(1000);
     return unlockedPokemonId;
   }
 

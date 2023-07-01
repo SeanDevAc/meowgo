@@ -6,7 +6,7 @@ import '../component/pokemon.dart';
 
 class PokeApiWidget {
   static Future<List<Pokemon>> fetchAllPokemon() async {
-    var url = Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151');
+    var url = Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1000');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
