@@ -1,7 +1,11 @@
-import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
+import '../functionalities/egg_counter_widget.dart';
 
 class PokemonDatabaseHelper {
   final _databaseName = 'pokemon_database1.db';
@@ -28,8 +32,8 @@ class PokemonDatabaseHelper {
       return _database!;
     }
 
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
+    // sqfliteFfiInit();
+    // databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -108,7 +112,7 @@ class PokemonDatabaseHelper {
     await db.execute('''
       UPDATE $inventoryTable 
       SET $inventoryAmount = $inventoryAmount + $eggAmount
-      WHERE $inventoryId = 0
+      WHERE $inventoryId = 0;
 ''');
   }
 
@@ -121,6 +125,15 @@ class PokemonDatabaseHelper {
     );
 
     if (maps.isEmpty) {
+      await db.rawInsert('''
+        INSERT INTO $inventoryTable(
+          $inventoryId, $inventoryDescription, $inventoryAmount)
+          VALUES(
+            0, 'eggs', 0
+          )
+
+      ''');
+      print('egg table added');
       return 0;
     }
 

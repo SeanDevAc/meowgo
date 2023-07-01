@@ -1,7 +1,11 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:meowgo/component/pokemon_db_helper.dart';
 import 'dart:async';
+import '../main-views/settings-page-widget.dart';
+import 'package:pedometer/pedometer.dart';
+import '../main-views/step_count_page.dart';
 
 class TimerStatefulWidget extends StatefulWidget {
   const TimerStatefulWidget({super.key});
@@ -15,7 +19,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  Duration _duration = const Duration(minutes: 1);
+  Duration _duration = const Duration(minutes: 0);
   String _result = "01:00";
   bool _isRunning = false;
 
@@ -50,17 +54,51 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   }
 
   void _enoughTimeElapsed() {
-    print('hoi');
-    _resetTimer(1);
+    Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('My Page'),
+            automaticallyImplyLeading: false,
+          ),
+          body: Column(
+            children: [
+              Center(
+                child: Text("congrats, you got an egg!"),
+              ),
+              Center(
+                child: ElevatedButton(
+                  child: const Text('Extra egg?'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return StepCountPage();
+                    }));
+                  },
+                ),
+              ),
+              Center(
+                child: TextButton(
+                  child: const Text('Collect Egg'),
+                  onPressed: () => PokemonDatabaseHelper().addEggs(1),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    ));
+
+    _resetTimer(_duration);
 // als wekkerfunctie aanstaat, komt er een wekker en 10 creds erbij
 // als silent aanstaat, krijg je gewoon 10 creds erbij. timer gaat door
 //
   }
 
-  void _resetTimer(int howManyminutes) {
+  void _resetTimer(duration) {
     print("object");
     setState(() {
-      _duration = Duration(minutes: howManyminutes);
+      _duration = duration;
       _result =
           '${_duration.inMinutes.toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}';
     });

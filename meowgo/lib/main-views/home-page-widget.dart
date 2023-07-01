@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../component/pokemon_db_helper.dart';
@@ -11,21 +12,30 @@ import '../component/db_helper.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  Future<int> getEggAmount() async {
+    return await PokemonDatabaseHelper().getEggAmount();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
           height: 100,
-          child: TextButton(
-            onPressed: () => PokemonDatabaseHelper().addEggs(1),
-            style: const ButtonStyle(
-              minimumSize: MaterialStatePropertyAll(Size(90, 40)),
-            ),
-            child: Text('${
-                //PokemonDatabaseHelper().getPokemonByNumber(1)
-                PokemonDatabaseHelper().getEggAmount()}'),
-          ),
+          child: ElevatedButton(
+              onPressed: () => PokemonDatabaseHelper().addEggs(1),
+              style: const ButtonStyle(),
+              child: FutureBuilder(
+                  future: PokemonDatabaseHelper().getEggAmount(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text('${snapshot.data}');
+                    } else {
+                      return Text('0');
+                    }
+                  })
+              //PokemonDatabaseHelper().getPokemonByNumber(1)
+              ),
         ),
         SizedBox(height: 400, child: partyPokemonList()),
       ],
