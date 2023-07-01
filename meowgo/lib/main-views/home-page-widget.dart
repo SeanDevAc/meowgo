@@ -1,19 +1,18 @@
 import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../component/pokemon_db_helper.dart';
+import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import '../functionalities/pokemonAPI-widget.dart';
 import './eggdex_page_widget.dart';
 import '../functionalities/egg_counter_widget.dart';
-import '../component/db_helper.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   Future<int> getEggAmount() async {
-    return await PokemonDatabaseHelper().getEggAmount();
+    return await DatabaseHelper().getEggAmount();
   }
 
   @override
@@ -23,10 +22,10 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 100,
           child: ElevatedButton(
-              onPressed: () => PokemonDatabaseHelper().addEggs(1),
+              onPressed: () => DatabaseHelper().addEggs(1),
               style: const ButtonStyle(),
               child: FutureBuilder(
-                  future: PokemonDatabaseHelper().getEggAmount(),
+                  future: DatabaseHelper().getEggAmount(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Text('${snapshot.data}');

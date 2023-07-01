@@ -8,7 +8,7 @@ import './timer-widget.dart';
 import '../main-views/home-page-widget.dart';
 import '../main-views/settings-page-widget.dart';
 import '../main-views/eggdex_page_widget.dart';
-import '../component/pokemon_db_helper.dart';
+import '../component/db_helper.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
   const StudyMonStatefulWidget({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    PokemonDatabaseHelper().nukeDatabase();
+    DatabaseHelper().nukeDatabase();
     PokeApiWidget.fetchAllPokemon();
   }
 

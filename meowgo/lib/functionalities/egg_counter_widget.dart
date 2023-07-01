@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../component/db_helper.dart';
 import 'dart:async';
+import '../component/db_helper.dart';
 
 class EggCounterStateful extends StatefulWidget {
   const EggCounterStateful({super.key});

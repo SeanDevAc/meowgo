@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:meowgo/component/pokemon_db_helper.dart';
+import 'package:meowgo/component/db_helper.dart';
 import '../component/pokemon.dart';
 
 class PokeApiWidget {
@@ -32,11 +32,11 @@ class PokeApiWidget {
           url: pokemon['url'],
           imageUrl: details['sprites']['front_default'],
           type: details['types'][0]['type']['name'],
-          unlocked: i < 3? 1 : 0,
+          unlocked: i < 3 ? 1 : 0,
           pokemonNumber: i + 1,
         );
 
-        PokemonDatabaseHelper().insertPokemon(pokemon);
+        DatabaseHelper().insertPokemon(pokemon);
         pokemonList.add(pokemon);
       }
 
@@ -57,7 +57,7 @@ class PokeApiWidget {
   }
 
   static Future<Pokemon> fetchPokemonByNumber(int pokemonNumber) async {
-    return PokemonDatabaseHelper().getPokemonByNumber(pokemonNumber);
+    return DatabaseHelper().getPokemonByNumber(pokemonNumber);
   }
 
   // static Future<Pokemon> fetchPokemonByNumbe(int pokemonNumber) async {

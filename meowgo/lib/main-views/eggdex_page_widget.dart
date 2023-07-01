@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../component/pokemon_db_helper.dart';
+import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 // import '../functionalities/pokemonAPI-widget.dart';
@@ -24,7 +24,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   }
 
   Future<void> fetchAllPokemon() async {
-    final pokemonList = await PokemonDatabaseHelper().getAllPokemon();
+    final pokemonList = await DatabaseHelper().getAllPokemon();
     setState(() {
       allPokemonList = pokemonList;
       filteredPokemonList = pokemonList;

@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:meowgo/component/pokemon_db_helper.dart';
+import 'package:meowgo/component/db_helper.dart';
 import 'dart:async';
 import '../main-views/settings-page-widget.dart';
 import 'package:pedometer/pedometer.dart';
@@ -80,7 +80,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
               Center(
                 child: TextButton(
                   child: const Text('Collect Egg'),
-                  onPressed: () => PokemonDatabaseHelper().addEggs(1),
+                  onPressed: () => DatabaseHelper().addEggs(1),
                 ),
               )
             ],
