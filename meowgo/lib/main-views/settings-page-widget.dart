@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meowgo/component/db_helper.dart';
 
 class SettingsStatsWidget extends StatelessWidget {
   const SettingsStatsWidget({
@@ -11,7 +12,14 @@ class SettingsStatsWidget extends StatelessWidget {
     return Container(
       color: theme.colorScheme.inversePrimary,
       alignment: Alignment.center,
-      child: const Text('Page 3'),
+      child: Column(
+        children: [
+          const Text('Page 3'),
+          TextButton(
+              onPressed: () => DatabaseHelper().nukeDatabaseAndFill(),
+              child: Text("reset game"))
+        ],
+      ),
     );
   }
 }

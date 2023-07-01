@@ -21,11 +21,10 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    DatabaseHelper().nukeDatabase();
-    PokeApiWidget.fetchAllPokemon();
+    DatabaseHelper().checkDatabaseEmptyAndFill();
   }
 
-  int currentPageIndex = 0;
+  int currentPageIndex = 2;
   var pages = <Text>[
     const Text("Party"),
     const Text("Egg-Dex"),

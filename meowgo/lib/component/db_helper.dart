@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:meowgo/functionalities/pokemonAPI-widget.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -21,6 +22,9 @@ class DatabaseHelper {
   final columnUnlocked = 'unlocked';
   final columnPokemonNumber = 'pokemonNumber';
 
+//inventory:
+// id 0 Eggs
+// id 1 Steps
   final inventoryTable = 'inventory_table';
   final inventoryId = 'id';
   final inventoryDescription = 'description';
@@ -41,10 +45,27 @@ class DatabaseHelper {
     return _database!;
   }
 
-  Future<void> nukeDatabase() async {
+  Future<void> nukeDatabaseAndFill() async {
     final db = await database;
     await db.delete(table);
     await db.delete(inventoryTable);
+
+    checkDatabaseEmptyAndFill();
+  }
+
+  Future<void> checkDatabaseEmptyAndFill() async {
+    final db = await database;
+    final List<Map<String, Object?>> maps = await db.query(
+      table,
+    );
+
+    if (maps.isEmpty) {
+      PokeApiWidget.fetchAllPokemon();
+      return;
+    }
+
+    print('database is already initialized');
+    return;
   }
 
   Future<Database> _initDatabase() async {
@@ -141,6 +162,32 @@ class DatabaseHelper {
       inventoryTable,
       where: '$inventoryId = ?',
       whereArgs: [0],
+    );
+
+    if (maps.isEmpty) {
+      await db.rawInsert('''
+        INSERT INTO $inventoryTable(
+          $inventoryId, $inventoryDescription, $inventoryAmount)
+          VALUES(
+            0, 'eggs', 0
+          )
+
+      ''');
+      print('egg table added');
+      return 0;
+    }
+
+    final amount = maps[0]['amount'] as int;
+    print(amount);
+    return amount;
+  }
+
+  Future<int> getStepsAmount() async {
+    final db = await database;
+    final List<Map<String, Object?>> maps = await db.query(
+      inventoryTable,
+      where: '$inventoryId = ?',
+      whereArgs: [1],
     );
 
     if (maps.isEmpty) {

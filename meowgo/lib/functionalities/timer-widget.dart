@@ -57,7 +57,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void _enoughTimeElapsed() {
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
-        return StepCountPage();
+        return const StepCountPage();
       },
     ));
 
