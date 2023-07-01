@@ -66,8 +66,6 @@ class _EggDexWidgetState extends State<EggDexWidget> {
     }
   }
 
-
-
   void addToInventory(Pokemon pokemon) {
     if (PartyList.length >= 4) {
       // Maximum limit reached, show an error message or handle accordingly
