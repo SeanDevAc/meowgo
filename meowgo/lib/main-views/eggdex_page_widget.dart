@@ -36,17 +36,10 @@ class _EggDexWidgetState extends State<EggDexWidget> {
     final unlockedPokemonList = await DatabaseHelper().getUnlockedPokemon();
     setState(() {
       allUnlockedPokemon = unlockedPokemonList;
+      allPokemonList = unlockedPokemonList;
       filteredPokemonList = unlockedPokemonList;
     });
   }
-
-  // Future<void> fetchAllPokemo() async {
-  //   final pokemonList = await PokeApiWidget.fetchAllPokemon();
-  //   setState(() {
-  //     allPokemonList = pokemonList;
-  //     filteredPokemonList = pokemonList;
-  //   });
-  // }
 
   void filterPokemon(String searchQuery) {
     if (searchQuery.isEmpty) {
