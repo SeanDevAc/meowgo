@@ -13,20 +13,10 @@ class PokemonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final name = capitalizeFirstLetter(pokemon.name);
     final backgroundColor = getColorForType(pokemon.type);
-    bool isPokemonLocked(Pokemon pokemon) {
-      if (pokemon.unlocked == 0) {
-        return false;
-      } else {
-        return true;
-      }
-    }
 
-    final isLocked = isPokemonLocked(pokemon);
 
     return Container(
       color: backgroundColor,
-      child: Visibility(
-          visible: isLocked,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -66,7 +56,6 @@ class PokemonWidget extends StatelessWidget {
             ],
           ),
         )
-      ),
     );
   }
 

@@ -16,12 +16,13 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   List<Pokemon> filteredPokemonList = [];
   List<Pokemon> allUnlockedPokemon = [];
   List<Pokemon> PartyList = [];
+  List<Pokemon> allUnlockedPokemon = [];
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    fetchAllPokemon();
+    fetchUnlockedPokemon();
   }
 
   Future<void> fetchAllPokemon() async {
@@ -65,6 +66,8 @@ class _EggDexWidgetState extends State<EggDexWidget> {
       });
     }
   }
+
+
 
   void addToInventory(Pokemon pokemon) {
     if (PartyList.length >= 4) {

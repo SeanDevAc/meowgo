@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 100,
           child: ElevatedButton(
-              onPressed: () => DatabaseHelper().addEggs(1),
+              onPressed: () => DatabaseHelper().updateRandomPokemonUnlocked(),
               style: const ButtonStyle(),
               child: FutureBuilder(
                   future: DatabaseHelper().getEggAmount(),
