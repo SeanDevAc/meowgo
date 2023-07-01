@@ -39,12 +39,12 @@ class gotNewPokemonPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'Gefeliciteerd!',
+                  'Congratulations!',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Je hebt de volgende Pokémon ontgrendeld:',
+                  'You unlocked the below pokemon:',
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
