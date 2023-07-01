@@ -33,8 +33,9 @@ class DatabaseHelper {
       return _database!;
     }
 
-     sqfliteFfiInit();
-     databaseFactory = databaseFactoryFfi;
+    // uncomment for windows support:
+    //  sqfliteFfiInit();
+    //  databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -159,7 +160,6 @@ class DatabaseHelper {
     print(amount);
     return amount;
   }
-
 
   Future<void> updateRandomPokemonUnlocked() async {
     final db = await database;
