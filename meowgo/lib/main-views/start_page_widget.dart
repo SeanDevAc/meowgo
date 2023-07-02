@@ -11,6 +11,21 @@ class StartPageWidget extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPageWidget> {
+  bool canProceed = false;
+
+  evenWachten() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      canProceed = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    evenWachten();
+  }
+
   @override
   Widget build(BuildContext context) {
     final gradientColors = [
@@ -30,39 +45,40 @@ class _StartPageState extends State<StartPageWidget> {
           stops: stops,
         ),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Start Page'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Welcome to the Start Page!',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(children: [
+            Text(
+              'Studémon!',
+              style: TextStyle(
+                fontSize: 24,
+                // color: Color.fromARGB(255, 255, 255, 255),
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 10
+                  ..color = Colors.white,
+              ),
+            ),
+            const Text(
+              'Studémon!',
+              style: TextStyle(fontSize: 24, color: Colors.black),
+            ),
+          ]),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return const StudyMonStatefulWidget();
+                  },
                 ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return const StudyMonStatefulWidget();
-                      },
-                    ),
-                  );
-                },
-                child: const Text('Continue'),
-              ),
-            ],
+              );
+            },
+            child: const Text('Continue'),
           ),
-        ),
+        ],
       ),
     );
   }
