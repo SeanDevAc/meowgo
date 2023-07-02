@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meowgo/component/db_helper.dart';
-import 'package:meowgo/functionalities/egg_counter_widget.dart';
 import 'package:meowgo/functionalities/pokemonAPI-widget.dart';
 
 import './timer-widget.dart';
@@ -21,7 +20,6 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    DatabaseHelper().checkDatabaseEmptyAndFill();
   }
 
   int currentPageIndex = 1;
@@ -35,11 +33,12 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //title: pages[currentPageIndex],
-        leading: const TimerStatefulWidget(),
-        leadingWidth: 2000.0,
-      ),
+      appBar: TimerStatefulWidget(),
+      // AppBar(
+      //   //title: pages[currentPageIndex],
+      //   leading: const TimerStatefulWidget(),
+      //   leadingWidth: 2000.0,
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
           setState(() {

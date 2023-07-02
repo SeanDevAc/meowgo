@@ -32,12 +32,13 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
   }
 
   void openStepCounter() async {
-    final totalStepsObject = await Navigator.pushNamed(
+    // final totalStepsObject =
+    await Navigator.pushNamed(
       context,
       '/stepCountPage',
-      arguments: {'totalSteps': totalSteps},
+      // arguments: {'totalSteps': totalSteps},
     );
-    totalSteps = totalStepsObject as int;
+    // totalSteps = totalStepsObject as int;
   }
 
   @override

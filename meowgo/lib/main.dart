@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meowgo/main-views/got_new_pokemon_page.dart';
 import 'package:meowgo/main-views/home-page-widget.dart';
 import 'package:meowgo/main-views/start_page_widget.dart';
 import 'package:meowgo/main-views/step_count_page.dart';
@@ -20,7 +21,11 @@ class StudyMonApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Named routes i think?',
-      routes: {'/stepCountPage': (context) => const StepCountPage()},
+      routes: {
+        '/stepCountPage': (context) => const StepCountPage(),
+        '/hatchedPokemonPage': (context) => const GotNewPokemonPage(),
+        '/home': (context) => const StudyMonStatefulWidget()
+      },
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
