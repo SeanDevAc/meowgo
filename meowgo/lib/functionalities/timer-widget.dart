@@ -99,6 +99,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void _enoughTimeElapsed() {
     _resetTimer(_targetDuration);
     print('enough time');
+
     openStepCounter();
 
     // Navigator.push(context, MaterialPageRoute<void>(

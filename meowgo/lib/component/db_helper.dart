@@ -9,7 +9,7 @@ import 'pokemon.dart';
 import '../functionalities/egg_counter_widget.dart';
 
 class DatabaseHelper {
-  final _databaseName = 'pokemon_database2.db';
+  final _databaseName = 'pokemon_database6.db';
   final _databaseVersion = 1;
 
   final table = 'pokemon_table';

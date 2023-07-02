@@ -17,14 +17,13 @@ class StudyMonApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseHelper().checkDatabaseEmptyAndFill();
     return MaterialApp(
       title: 'Named routes i think?',
       routes: {'/stepCountPage': (context) => const StepCountPage()},
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(174, 255, 15, 15))),
+              seedColor: Color.fromARGB(173, 255, 255, 255))),
       home: const StudyMonStatefulWidget(),
     );
   }

@@ -14,49 +14,53 @@ class PokemonWidget extends StatelessWidget {
     final name = capitalizeFirstLetter(pokemon.name);
     final backgroundColor = getColorForType(pokemon.type);
 
-
-    return Container(
-      color: backgroundColor,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          elevation: 2.0,
-          child: Column(
-            children: [
-              Expanded(
-                child: Image.network(
-                  pokemon.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      '#${pokemon.pokemonNumber}',
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black54,
-                      ),
+    return Card(
+        color: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            elevation: 2.0,
+            child: Container(
+              color: backgroundColor.withOpacity(0.25),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      pokemon.imageUrl,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '#${pokemon.pokemonNumber}',
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        const SizedBox(height: 4.0),
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        )
-    );
+        ));
   }
 
   String capitalizeFirstLetter(String text) {

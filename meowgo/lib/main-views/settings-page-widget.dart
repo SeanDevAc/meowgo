@@ -16,7 +16,7 @@ class SettingsStatsWidget extends StatelessWidget {
         children: [
           const Text('Page 3'),
           TextButton(
-              onPressed: () => DatabaseHelper().nukeDatabaseAndFill(),
+              onPressed: () => DatabaseHelper().checkDatabaseEmptyAndFill(),
               child: Text("reset game"))
         ],
       ),

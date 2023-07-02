@@ -3,6 +3,8 @@ import 'package:meowgo/component/db_helper.dart';
 import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 
+import '../component/pokemonwidget.dart';
+
 String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
 }
@@ -77,9 +79,10 @@ class _StepCountPageState extends State<StepCountPage> {
   void goBackWithEgg(bool gotEgg) {
     if (gotEgg) {
       //iets met ei erbij
+      DatabaseHelper().addEggs(1);
+      Navigator.pop(context, totalSteps + _currentSteps);
     } else {}
     isFirstRun = true;
-    Navigator.pop(context, totalSteps + _currentSteps);
   }
 
   void updateTotalSteps(StepCount event) {
@@ -151,6 +154,7 @@ class _StepCountPageState extends State<StepCountPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(height: 20),
               Text(
                 "You got an egg!\nnow take $targetSteps steps for another egg!",
                 style: const TextStyle(
@@ -159,37 +163,64 @@ class _StepCountPageState extends State<StepCountPage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 60,
+                height: 20,
               ),
               const Text(
                 'Steps Taken',
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 26),
               ),
               Text(
                 _stepsString,
-                style: const TextStyle(fontSize: 60),
+                style: const TextStyle(fontSize: 40),
               ),
-              const Divider(
-                height: 100,
-                thickness: 0,
-                color: Colors.white,
+
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.height * 0.4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: FractionallySizedBox(
+                        widthFactor: 0.5,
+                        heightFactor: 0.5,
+                        child: FutureBuilder(
+                          future: DatabaseHelper().getActivePokemon(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text(
+                                  'An error occured while loading the pokemon');
+                            } else if (snapshot.hasData) {
+                              return PokemonWidget(pokemon: snapshot.data!);
+                            } else {
+                              return const Text('No pokemon is following you');
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const Text(
-                'Pokemon Status',
-                style: TextStyle(fontSize: 30),
-              ),
-              Icon(
-                _status == 'walking' ? Icons.egg : Icons.catching_pokemon,
-                size: 100,
-              ),
+              // Icon(
+              //   _status == 'walking' ? Icons.egg : Icons.catching_pokemon,
+              //   size: 100,
+              // ),
               Center(
                 child: ElevatedButton(
-                    onPressed: enoughSteps
-                        ? () {
-                            Navigator.pop(context, totalSteps + _currentSteps);
-                          }
-                        : null,
-                    child: const Text('Receive egg!')),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            enoughSteps
+                                ? Colors.greenAccent
+                                : Colors.redAccent),
+                        foregroundColor: MaterialStatePropertyAll<Color>(
+                            enoughSteps ? Colors.black : Colors.white)),
+                    onPressed: () =>
+                        enoughSteps ? goBackWithEgg(enoughSteps) : null,
+                    child: Text(enoughSteps
+                        ? 'Receive egg!'
+                        : 'no thanks, take me back')),
               )
             ],
           ),
