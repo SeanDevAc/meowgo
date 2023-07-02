@@ -21,10 +21,9 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   void initState() {
     super.initState();
-    DatabaseHelper().checkDatabaseEmptyAndFill();
   }
 
-  int currentPageIndex = 2;
+  int currentPageIndex = 0;
 
   var pages = <Text>[
     const Text("Party"),

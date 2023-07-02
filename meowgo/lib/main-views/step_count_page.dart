@@ -24,6 +24,7 @@ class _StepCountPageState extends State<StepCountPage> {
   int _currentSteps = 0;
 
   bool isFirstRun = true;
+  bool mustBeInitialized = true;
   bool enoughSteps = false;
 
   @override
@@ -33,10 +34,18 @@ class _StepCountPageState extends State<StepCountPage> {
   }
 
   void onStepCount(StepCount event) {
-    if (isFirstRun && mounted && !enoughSteps) {
+    if ((isFirstRun && mounted && !enoughSteps)) {
       totalSteps = event.steps;
+      print('total steps initialized: $totalSteps');
       setState(() {
         isFirstRun = false;
+      });
+    }
+    if (mustBeInitialized) {
+      setState(() {
+        totalSteps = event.steps;
+        print('INIT RAN: $totalSteps');
+        mustBeInitialized = false;
       });
     }
     // als dit in de achtergrond runt:
@@ -45,7 +54,7 @@ class _StepCountPageState extends State<StepCountPage> {
       print('not mounted');
       return;
     }
-
+    // totalSteps hier op first run op 0 for some reason
     print('evensteps: ${event.steps}\n totalSteps: $totalSteps');
     setState(() {
       //grootste getal vanuit event - wat het meekrijgt uit prev
@@ -125,7 +134,9 @@ class _StepCountPageState extends State<StepCountPage> {
     final prev =
         (ModalRoute.of(context)?.settings.arguments ?? <int, dynamic>{}) as Map;
     prevSteps = prev['totalSteps'];
-    totalSteps = prevSteps;
+    if (prevSteps != 0) {
+      totalSteps = prevSteps;
+    }
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

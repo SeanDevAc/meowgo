@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meowgo/main-views/home-page-widget.dart';
 import 'package:meowgo/main-views/step_count_page.dart';
 import 'package:path/path.dart';
+import 'component/db_helper.dart';
 
 import 'functionalities/nav-bar-widget.dart';
 
@@ -16,6 +17,7 @@ class StudyMonApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseHelper().checkDatabaseEmptyAndFill();
     return MaterialApp(
       title: 'Named routes i think?',
       routes: {'/stepCountPage': (context) => const StepCountPage()},

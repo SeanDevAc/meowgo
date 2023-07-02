@@ -10,7 +10,7 @@ import '../functionalities/egg_counter_widget.dart';
 
 class DatabaseHelper {
   final _databaseName = 'pokemon_database2.db';
-  final _databaseVersion = 3;
+  final _databaseVersion = 1;
 
   final table = 'pokemon_table';
   final columnId = 'id';
@@ -38,8 +38,8 @@ class DatabaseHelper {
     }
 
     // uncomment for windows support:
-      sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
+    // sqfliteFfiInit();
+    // databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -120,30 +120,30 @@ class DatabaseHelper {
     });
   }
 
-Future<Pokemon?> getActivePokemon() async {
-  final db = await database;
-  final List<Map<String, dynamic>> maps = await db.query(
-    table,
-    where: '$columnUnlocked = ? AND $columnPokemonActive = ?',
-    whereArgs: [1, 1],
-    limit: 1,
-  );
-
-  if (maps.isNotEmpty) {
-    final Map<String, dynamic> pokemonMap = maps.first;
-    return Pokemon(
-      name: pokemonMap[columnName],
-      url: pokemonMap[columnUrl],
-      imageUrl: pokemonMap[columnImageUrl],
-      type: pokemonMap[columnType],
-      unlocked: pokemonMap[columnUnlocked],
-      pokemonNumber: pokemonMap[columnPokemonNumber],
-      pokemonActive: pokemonMap[columnPokemonActive],
+  Future<Pokemon?> getActivePokemon() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      table,
+      where: '$columnUnlocked = ? AND $columnPokemonActive = ?',
+      whereArgs: [1, 1],
+      limit: 1,
     );
-  }
 
-  return null; // Return null if no active Pokemon is found
-}
+    if (maps.isNotEmpty) {
+      final Map<String, dynamic> pokemonMap = maps.first;
+      return Pokemon(
+        name: pokemonMap[columnName],
+        url: pokemonMap[columnUrl],
+        imageUrl: pokemonMap[columnImageUrl],
+        type: pokemonMap[columnType],
+        unlocked: pokemonMap[columnUnlocked],
+        pokemonNumber: pokemonMap[columnPokemonNumber],
+        pokemonActive: pokemonMap[columnPokemonActive],
+      );
+    }
+
+    return null; // Return null if no active Pokemon is found
+  }
 
   Future<Pokemon> getPokemonByNumber(int pokemonNumber) async {
     final db = await database;
@@ -280,7 +280,7 @@ Future<Pokemon?> getActivePokemon() async {
       UPDATE $table 
       SET $columnPokemonActive = 0
     ''');
-    
+
     print('reset pokemonActive status');
   }
 
