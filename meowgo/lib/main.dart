@@ -15,7 +15,7 @@ class StudyMonApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(174, 255, 15, 15))),
+              seedColor: Color.fromARGB(172, 255, 38, 38))),
       home: const StudyMonStatefulWidget(),
     );
   }

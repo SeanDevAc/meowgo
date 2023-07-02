@@ -7,8 +7,8 @@ import 'dart:math';
 
 class gotNewPokemonPage extends StatelessWidget {
   const gotNewPokemonPage({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   Future<List<Pokemon>> _loadPokemonList() async {
     return await DatabaseHelper().getAllPokemon();
@@ -20,7 +20,7 @@ class gotNewPokemonPage extends StatelessWidget {
   }
 
   int randomId() {
-    int unlockedPokemonId = Random().nextInt(151);
+    int unlockedPokemonId = Random().nextInt(300);
     return unlockedPokemonId;
   }
 
@@ -30,56 +30,70 @@ class gotNewPokemonPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('New Pokemon!'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.height * 0.8,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Congratulations!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'You unlocked the below pokemon:',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 10),
-                Expanded(
-                  flex: 1,
-                  child: FractionallySizedBox(
-                    widthFactor: 0.5,
-                    heightFactor: 0.5,
-                    child: FutureBuilder(
-                      future: getUnlockedPokemon(randomId()),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text(
-                              'An error occured while loading the pokemon');
-                        } else if (snapshot.hasData) {
-                          return PokemonWidget(pokemon: snapshot.data!);
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      },
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            colors: [
+              Colors.white,
+              Colors.white,
+              Colors.yellow.withOpacity(1.0),
+            ],
+            stops: [0.0, 0.2, 1.0],
+            center: Alignment.center,
+            radius: 1.0,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: MediaQuery.of(context).size.height * 0.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'Congratulations!',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'You unlocked the below pokemon:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    flex: 1,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      heightFactor: 0.5,
+                      child: FutureBuilder(
+                        future: getUnlockedPokemon(randomId()),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text(
+                                'An error occurred while loading the pokemon');
+                          } else if (snapshot.hasData) {
+                            return PokemonWidget(pokemon: snapshot.data!);
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return StepCountPage();
-                      },
-                    ));
-                  },
-                  child: Text('Gather another egg!'),
-                ),
-              ],
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return StepCountPage();
+                        },
+                      ));
+                    },
+                    child: Text('Gather another egg!'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
