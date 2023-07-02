@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: const EdgeInsets.all(16.0),
                                       decoration: BoxDecoration(
                                         color: const Color.fromARGB(255, 223, 71, 71),
-                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderRadius: BorderRadius.circular(16.0),
                                         border: Border.all(color: Color.fromARGB(255, 182, 56, 47), width: 5.0),
                                       ),
                                       child: Text(
