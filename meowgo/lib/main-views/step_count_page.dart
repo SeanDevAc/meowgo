@@ -64,7 +64,7 @@ class _StepCountPageState extends State<StepCountPage> {
       _stepsString = _currentSteps.toString();
     });
 
-    if (_currentSteps > targetSteps) {
+    if (_currentSteps >= targetSteps) {
       // setStepsAmount(event.steps);
       // print('current: $_currentSteps\ntotal: $totalSteps');
       enoughStepsTaken();
@@ -81,7 +81,8 @@ class _StepCountPageState extends State<StepCountPage> {
       //iets met ei erbij
       DatabaseHelper().addEggs(1);
     } else {}
-    Navigator.pop(context, totalSteps + _currentSteps);
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    // Navigator.popUntil(context, ModalRoute.withName('/home'));
     isFirstRun = true;
   }
 
@@ -134,18 +135,18 @@ class _StepCountPageState extends State<StepCountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prev =
-        (ModalRoute.of(context)?.settings.arguments ?? <int, dynamic>{}) as Map;
-    prevSteps = prev['totalSteps'];
-    if (prevSteps != 0) {
-      totalSteps = prevSteps;
-    }
+    // final prev =
+    //     (ModalRoute.of(context)?.settings.arguments ?? <int, dynamic>{}) as Map;
+    // prevSteps = prev['totalSteps'];
+    // if (prevSteps != 0) {
+    //   totalSteps = prevSteps;
+    // }
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-              Navigator.pop(context, totalSteps + _currentSteps);
+              goBackWithEgg(false);
             },
           ),
           title: const Text('Congrats!'),

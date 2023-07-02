@@ -6,7 +6,6 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
-import '../functionalities/egg_counter_widget.dart';
 
 class DatabaseHelper {
   final _databaseName = 'pokemon_database6.db';
@@ -38,8 +37,8 @@ class DatabaseHelper {
     }
 
     // uncomment for windows support:
-     sqfliteFfiInit();
-     databaseFactory = databaseFactoryFfi;
+    //  sqfliteFfiInit();
+    //  databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -177,6 +176,7 @@ class DatabaseHelper {
 
   Future<void> addEggs(int eggAmount) async {
     final db = await database;
+    print('added eggs: $eggAmount');
 
     await db.execute('''
       UPDATE $inventoryTable 
@@ -207,7 +207,6 @@ class DatabaseHelper {
     }
 
     final amount = maps[0]['amount'] as int;
-    print(amount);
     return amount;
   }
 
