@@ -9,8 +9,8 @@ import 'pokemon.dart';
 import '../functionalities/egg_counter_widget.dart';
 
 class DatabaseHelper {
-  final _databaseName = 'pokemon_database1.db';
-  final _databaseVersion = 2;
+  final _databaseName = 'pokemon_database2.db';
+  final _databaseVersion = 3;
 
   final table = 'pokemon_table';
   final columnId = 'id';
@@ -20,6 +20,7 @@ class DatabaseHelper {
   final columnType = 'type';
   final columnUnlocked = 'unlocked';
   final columnPokemonNumber = 'pokemonNumber';
+  final columnPokemonActive = 'pokemonActive';
 
 //inventory:
 // id 0 Eggs
@@ -37,8 +38,8 @@ class DatabaseHelper {
     }
 
     // uncomment for windows support:
-    //  sqfliteFfiInit();
-    //  databaseFactory = databaseFactoryFfi;
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;
@@ -96,6 +97,7 @@ class DatabaseHelper {
         type: maps[index][columnType],
         unlocked: maps[index][columnUnlocked],
         pokemonNumber: maps[index][columnPokemonNumber],
+        pokemonActive: maps[index][columnPokemonActive],
       );
     });
   }
@@ -113,9 +115,35 @@ class DatabaseHelper {
         type: maps[index][columnType],
         unlocked: maps[index][columnUnlocked],
         pokemonNumber: maps[index][columnPokemonNumber],
+        pokemonActive: maps[index][columnPokemonActive],
       );
     });
   }
+
+Future<Pokemon?> getActivePokemon() async {
+  final db = await database;
+  final List<Map<String, dynamic>> maps = await db.query(
+    table,
+    where: '$columnUnlocked = ? AND $columnPokemonActive = ?',
+    whereArgs: [1, 1],
+    limit: 1,
+  );
+
+  if (maps.isNotEmpty) {
+    final Map<String, dynamic> pokemonMap = maps.first;
+    return Pokemon(
+      name: pokemonMap[columnName],
+      url: pokemonMap[columnUrl],
+      imageUrl: pokemonMap[columnImageUrl],
+      type: pokemonMap[columnType],
+      unlocked: pokemonMap[columnUnlocked],
+      pokemonNumber: pokemonMap[columnPokemonNumber],
+      pokemonActive: pokemonMap[columnPokemonActive],
+    );
+  }
+
+  return null; // Return null if no active Pokemon is found
+}
 
   Future<Pokemon> getPokemonByNumber(int pokemonNumber) async {
     final db = await database;
@@ -132,7 +160,8 @@ class DatabaseHelper {
           imageUrl: 'imageUrl',
           pokemonNumber: 2,
           type: '',
-          unlocked: 1);
+          unlocked: 1,
+          pokemonActive: 0);
     }
 
     return Pokemon(
@@ -142,6 +171,7 @@ class DatabaseHelper {
       type: maps[0][columnType],
       unlocked: maps[0][columnUnlocked],
       pokemonNumber: maps[0][columnPokemonNumber],
+      pokemonActive: maps[0][columnPokemonActive],
     );
   }
 
@@ -220,6 +250,30 @@ class DatabaseHelper {
     return unlockedPokemon;
   }
 
+  Future<int> updatePokemonActive(int PokemonId, int updatedStatus) async {
+    final db = await database;
+
+    await db.execute('''
+      UPDATE $table 
+      SET $columnPokemonActive = $updatedStatus
+      WHERE $columnPokemonNumber = $PokemonId;
+    ''');
+
+    print('Pokemon Active updated successfully: $PokemonId');
+    return PokemonId;
+  }
+
+  Future<void> resetPokemonActive() async {
+    final db = await database;
+
+    await db.execute('''
+      UPDATE $table 
+      SET $columnPokemonActive = 0
+    ''');
+    
+    print('reset pokemonActive status');
+  }
+
   void _createDb(Database db) async {
     final db = await database;
     await db.execute('''
@@ -237,7 +291,8 @@ class DatabaseHelper {
             $columnImageUrl TEXT,
             $columnType TEXT,
             $columnUnlocked INTEGER,
-            $columnPokemonNumber INTEGER
+            $columnPokemonNumber INTEGER,
+            $columnPokemonActive INTEGER
           )
         ''');
   }

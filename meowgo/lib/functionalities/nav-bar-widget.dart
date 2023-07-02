@@ -63,7 +63,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         ],
       ),
       body: <Widget>[
-        const HomePage(),
+        HomePage(),
         const EggDexWidget(),
         const SettingsStatsWidget(),
       ][currentPageIndex],
