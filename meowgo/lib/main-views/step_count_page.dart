@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meowgo/component/db_helper.dart';
 import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 
 String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
-}
-
-void main() {
-  runApp(const StepCountPage());
 }
 
 class StepCountPage extends StatefulWidget {
@@ -20,8 +17,14 @@ class StepCountPage extends StatefulWidget {
 class _StepCountPageState extends State<StepCountPage> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
+  String _status = '?', _stepsString = '?';
   final int targetSteps = 10;
+  int totalSteps = 0;
+  int prevSteps = 0;
+  int _currentSteps = 0;
+
+  bool isFirstRun = true;
+  bool enoughSteps = false;
 
   @override
   void initState() {
@@ -30,17 +33,59 @@ class _StepCountPageState extends State<StepCountPage> {
   }
 
   void onStepCount(StepCount event) {
-    print(event);
+    if (isFirstRun && mounted && !enoughSteps) {
+      totalSteps = event.steps;
+      setState(() {
+        isFirstRun = false;
+      });
+    }
+    // als dit in de achtergrond runt:
+    if (!mounted) {
+      totalSteps = event.steps;
+      print('not mounted');
+      return;
+    }
+
+    print('evensteps: ${event.steps}\n totalSteps: $totalSteps');
     setState(() {
-      _steps = event.steps.toString();
+      //grootste getal vanuit event - wat het meekrijgt uit prev
+      _currentSteps = event.steps - totalSteps;
+      _stepsString = _currentSteps.toString();
     });
-    if (event.steps % 10 == 0) {
-      Navigator.pop(context);
+
+    if (_currentSteps > targetSteps) {
+      // setStepsAmount(event.steps);
+      print('current: $_currentSteps\ntotal: $totalSteps');
+      enoughStepsTaken();
     }
   }
 
+  void enoughStepsTaken() {
+    enoughSteps = true;
+    isFirstRun = true;
+  }
+
+  void goBackWithEgg(bool gotEgg) {
+    if (gotEgg) {
+      //iets met ei erbij
+    } else {}
+    isFirstRun = true;
+    Navigator.pop(context, totalSteps + _currentSteps);
+  }
+
+  void updateTotalSteps(StepCount event) {
+    totalSteps = event.steps;
+  }
+
+  // Future<int> getStepsAmount() async {
+  //   stepsAmount = await DatabaseHelper().getStepsAmount();
+  //   return stepsAmount;
+  // }
+
   void onPedestrianStatusChanged(PedestrianStatus event) {
-    print(event);
+    if (!mounted) {
+      return;
+    } else {}
     setState(() {
       _status = event.status;
     });
@@ -48,6 +93,7 @@ class _StepCountPageState extends State<StepCountPage> {
 
   void onPedestrianStatusError(error) {
     print('onPedestrianStatusError: $error');
+    if (!mounted) return;
     setState(() {
       _status = 'Pedestrian Status not available';
     });
@@ -56,8 +102,9 @@ class _StepCountPageState extends State<StepCountPage> {
 
   void onStepCountError(error) {
     print('onStepCountError: $error');
+    if (!mounted) return;
     setState(() {
-      _steps = 'Step Count not available';
+      _stepsString = 'Step Count not available';
     });
   }
 
@@ -75,12 +122,16 @@ class _StepCountPageState extends State<StepCountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final prev =
+        (ModalRoute.of(context)?.settings.arguments ?? <int, dynamic>{}) as Map;
+    prevSteps = prev['totalSteps'];
+    totalSteps = prevSteps;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, totalSteps + _currentSteps);
             },
           ),
           title: const Text('Congrats!'),
@@ -104,7 +155,7 @@ class _StepCountPageState extends State<StepCountPage> {
                 style: TextStyle(fontSize: 30),
               ),
               Text(
-                _steps,
+                _stepsString,
                 style: const TextStyle(fontSize: 60),
               ),
               const Divider(
@@ -113,24 +164,21 @@ class _StepCountPageState extends State<StepCountPage> {
                 color: Colors.white,
               ),
               const Text(
-                'Pedestrian Status',
+                'Pokemon Status',
                 style: TextStyle(fontSize: 30),
               ),
               Icon(
-                _status == 'walking'
-                    ? Icons.directions_walk
-                    : _status == 'stopped'
-                        ? Icons.accessibility_new
-                        : Icons.error,
+                _status == 'walking' ? Icons.egg : Icons.catching_pokemon,
                 size: 100,
               ),
               Center(
-                child: Text(
-                  _status,
-                  style: _status == 'walking' || _status == 'stopped'
-                      ? const TextStyle(fontSize: 30)
-                      : const TextStyle(fontSize: 20, color: Colors.red),
-                ),
+                child: ElevatedButton(
+                    onPressed: enoughSteps
+                        ? () {
+                            Navigator.pop(context, totalSteps + _currentSteps);
+                          }
+                        : null,
+                    child: const Text('Receive egg!')),
               )
             ],
           ),

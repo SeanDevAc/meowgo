@@ -198,13 +198,23 @@ class DatabaseHelper {
           )
 
       ''');
-      print('egg table added');
+      print('steps table added');
       return 0;
     }
 
     final amount = maps[0]['amount'] as int;
     print(amount);
     return amount;
+  }
+
+  Future<void> setStepsAmount(int stepsAmount) async {
+    final db = await database;
+
+    await db.execute('''
+      UPDATE $inventoryTable 
+      SET $inventoryAmount = $stepsAmount
+      WHERE $inventoryId = 1;
+''');
   }
 
   Future<int> updatePokemonUnlocked(int unlockedPokemon) async {

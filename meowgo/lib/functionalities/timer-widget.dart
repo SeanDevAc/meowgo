@@ -21,10 +21,12 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  final Duration _targetDuration = const Duration(seconds: 4);
-  Duration _duration = const Duration(seconds: 4);
+  final Duration _targetDuration = const Duration(seconds: 1);
+  Duration _duration = const Duration(seconds: 1);
   String _result = "01:00";
   bool _isRunning = false;
+
+  int totalSteps = 0;
 
   bool isHatchingEgg = false;
 
@@ -85,16 +87,28 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     _stopwatch.stop();
   }
 
+  void openStepCounter() async {
+    final totalStepsObject = await Navigator.pushNamed(
+      context,
+      '/stepCountPage',
+      arguments: {'totalSteps': totalSteps},
+    );
+    totalSteps = totalStepsObject as int;
+  }
+
   void _enoughTimeElapsed() {
     _resetTimer(_targetDuration);
     print('enough time');
+    openStepCounter();
 
-    Navigator.push(context, MaterialPageRoute<void>(
-      builder: (BuildContext context) {
-        return isHatchingEgg ? const gotNewPokemonPage() : const GotEggPage();
-        // return GotEggPage();
-      },
-    ));
+    // Navigator.push(context, MaterialPageRoute<void>(
+    //   builder: (BuildContext context) {
+    //     return isHatchingEgg
+    //         ? const gotNewPokemonPage()
+    //         : const StepCountPage();
+    //     // return GotEggPage();
+    //   },
+    // ));
   }
 
   void _resetTimer(Duration duration) {
