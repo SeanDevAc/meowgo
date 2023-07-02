@@ -13,10 +13,10 @@ class SettingsStatsWidget extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.red, // Change the color here
-            Colors.red, // Change the color here
-            Colors.white, // Change the color here
-            Colors.white, // Change the color here
+            Colors.red, 
+            Colors.red, 
+            Colors.white, 
+            Colors.white, 
           ],
           stops: [0.0, 0.5, 0.5, 1.0],
         ),
@@ -42,21 +42,61 @@ class SettingsStatsWidget extends StatelessWidget {
             width: 140,
             height: 140,
             decoration: BoxDecoration(
-              color: Colors.red.shade50, // Change the color here
+              color: Colors.red.shade50, 
               shape: BoxShape.circle,
             ),
           ),
           Column(
             children: [
-              const Text('Page 3'),
+              SizedBox(height: 20.0), 
               TextButton(
-                onPressed: () => DatabaseHelper().nukeDatabaseAndFill(),
-                child: Text("Reset Game"),
+                onPressed: () => _showResetConfirmationDialog(context),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.white,
+                  ),
+                  child: Text(
+                    "Reset Collection",
+                    style: TextStyle(
+                      color: Colors.red, 
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  void _showResetConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Reset Collection"),
+          content: Text("Are you sure you want to reset your Pokemon collection?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                DatabaseHelper().nukeDatabaseAndFill();
+                Navigator.of(context).pop();
+              },
+              child: Text("Reset"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
