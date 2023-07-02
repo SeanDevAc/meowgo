@@ -27,7 +27,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   var pages = <Text>[
     const Text("Party"),
     const Text("Pokédex"),
-    const Text("Settings & Stats"),
+    const Text("Settings"),
   ];
 
   @override
@@ -57,7 +57,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Stats',
+            label: 'Settings',
           ),
         ],
       ),
