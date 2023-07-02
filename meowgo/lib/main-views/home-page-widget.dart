@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -73,12 +73,15 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      const SizedBox(
+                        height: 10.0,
+                      ),
                       const Text(
                         'Active Pokemon: ',
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                       Expanded(
                         flex: 1,
@@ -89,12 +92,13 @@ class _HomePageState extends State<HomePage> {
                             future: getActivePokemon(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
-                                return Text(
+                                return const Text(
                                     'An error occured while loading the pokemon');
                               } else if (snapshot.hasData) {
                                 return PokemonWidget(pokemon: snapshot.data!);
                               } else {
-                                return Text('No pokemon is following you');
+                                return const Text(
+                                    'No pokemon is following you');
                               }
                             },
                           ),

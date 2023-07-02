@@ -100,16 +100,16 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     _resetTimer(_targetDuration);
     print('enough time');
 
-    openStepCounter();
+    !isHatchingEgg ? openStepCounter() : openGotNewPokemonPage();
+  }
 
-    // Navigator.push(context, MaterialPageRoute<void>(
-    //   builder: (BuildContext context) {
-    //     return isHatchingEgg
-    //         ? const gotNewPokemonPage()
-    //         : const StepCountPage();
-    //     // return GotEggPage();
-    //   },
-    // ));
+  void openGotNewPokemonPage() {
+    Navigator.push(context, MaterialPageRoute<void>(
+      builder: (BuildContext context) {
+        return const gotNewPokemonPage();
+        // return GotEggPage();
+      },
+    ));
   }
 
   void _resetTimer(Duration duration) {
