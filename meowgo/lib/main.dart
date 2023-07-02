@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meowgo/main-views/home-page-widget.dart';
+import 'package:meowgo/main-views/start_page_widget.dart';
 import 'package:meowgo/main-views/step_count_page.dart';
 import 'package:path/path.dart';
 import 'component/db_helper.dart';
@@ -24,7 +25,7 @@ class StudyMonApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
               seedColor: Color.fromARGB(172, 255, 38, 38))),
-      home: const StudyMonStatefulWidget(),
+      home: const StartPageWidget(),
     );
   }
 }

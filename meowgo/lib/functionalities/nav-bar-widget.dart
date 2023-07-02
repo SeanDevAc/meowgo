@@ -28,7 +28,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
 
   var pages = <Text>[
     const Text("Party"),
-    const Text("Egg-Dex"),
+    const Text("Pokédex"),
     const Text("Settings & Stats"),
   ];
 
@@ -36,9 +36,9 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: pages[currentPageIndex],
+        //title: pages[currentPageIndex],
         leading: const TimerStatefulWidget(),
-        leadingWidth: 80.0,
+        leadingWidth: 200.0,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
@@ -53,8 +53,8 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.egg),
-            label: 'Egg-Dex',
+            icon: Icon(Icons.catching_pokemon),
+            label: 'Pokédex',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -63,7 +63,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         ],
       ),
       body: <Widget>[
-        HomePage(),
+        const HomePage(),
         const EggDexWidget(),
         const SettingsStatsWidget(),
       ][currentPageIndex],

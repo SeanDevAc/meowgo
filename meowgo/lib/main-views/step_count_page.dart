@@ -38,7 +38,7 @@ class _StepCountPageState extends State<StepCountPage> {
   void onStepCount(StepCount event) {
     if ((isFirstRun && mounted && !enoughSteps)) {
       totalSteps = event.steps;
-      print('total steps initialized: $totalSteps');
+      // print('total steps initialized: $totalSteps');
       setState(() {
         isFirstRun = false;
       });
@@ -46,18 +46,18 @@ class _StepCountPageState extends State<StepCountPage> {
     if (mustBeInitialized) {
       setState(() {
         totalSteps = event.steps;
-        print('INIT RAN: $totalSteps');
+        // print('INIT RAN: $totalSteps');
         mustBeInitialized = false;
       });
     }
     // als dit in de achtergrond runt:
     if (!mounted) {
       totalSteps = event.steps;
-      print('not mounted');
+      // print('not mounted');
       return;
     }
     // totalSteps hier op first run op 0 for some reason
-    print('evensteps: ${event.steps}\n totalSteps: $totalSteps');
+    // print('evensteps: ${event.steps}\n totalSteps: $totalSteps');
     setState(() {
       //grootste getal vanuit event - wat het meekrijgt uit prev
       _currentSteps = event.steps - totalSteps;
@@ -66,7 +66,7 @@ class _StepCountPageState extends State<StepCountPage> {
 
     if (_currentSteps > targetSteps) {
       // setStepsAmount(event.steps);
-      print('current: $_currentSteps\ntotal: $totalSteps');
+      // print('current: $_currentSteps\ntotal: $totalSteps');
       enoughStepsTaken();
     }
   }
@@ -80,8 +80,8 @@ class _StepCountPageState extends State<StepCountPage> {
     if (gotEgg) {
       //iets met ei erbij
       DatabaseHelper().addEggs(1);
-      Navigator.pop(context, totalSteps + _currentSteps);
     } else {}
+    Navigator.pop(context, totalSteps + _currentSteps);
     isFirstRun = true;
   }
 
@@ -104,16 +104,16 @@ class _StepCountPageState extends State<StepCountPage> {
   }
 
   void onPedestrianStatusError(error) {
-    print('onPedestrianStatusError: $error');
+    // print('onPedestrianStatusError: $error');
     if (!mounted) return;
     setState(() {
       _status = 'Pedestrian Status not available';
     });
-    print(_status);
+    // print(_status);
   }
 
   void onStepCountError(error) {
-    print('onStepCountError: $error');
+    // print('onStepCountError: $error');
     if (!mounted) return;
     setState(() {
       _stepsString = 'Step Count not available';
@@ -174,7 +174,7 @@ class _StepCountPageState extends State<StepCountPage> {
                 style: const TextStyle(fontSize: 40),
               ),
 
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.height * 0.4,
                 child: Column(
@@ -216,8 +216,9 @@ class _StepCountPageState extends State<StepCountPage> {
                                 : Colors.redAccent),
                         foregroundColor: MaterialStatePropertyAll<Color>(
                             enoughSteps ? Colors.black : Colors.white)),
-                    onPressed: () =>
-                        enoughSteps ? goBackWithEgg(enoughSteps) : null,
+                    onPressed: () => enoughSteps
+                        ? goBackWithEgg(enoughSteps)
+                        : goBackWithEgg(enoughSteps),
                     child: Text(enoughSteps
                         ? 'Receive egg!'
                         : 'no thanks, take me back')),

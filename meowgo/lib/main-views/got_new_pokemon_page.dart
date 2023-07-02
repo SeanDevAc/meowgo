@@ -5,14 +5,21 @@ import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
 import 'dart:math';
 
-class gotNewPokemonPage extends StatelessWidget {
-  const gotNewPokemonPage({
+class GotNewPokemonPage extends StatefulWidget {
+  const GotNewPokemonPage({
     super.key,
   });
 
+  @override
+  State<GotNewPokemonPage> createState() => _GotNewPokemonPageState();
+}
+
+class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
   Future<List<Pokemon>> _loadPokemonList() async {
     return await DatabaseHelper().getAllPokemon();
   }
+
+  int totalSteps = 0;
 
   Future<Pokemon> getUnlockedPokemon(int pokemonId) async {
     DatabaseHelper().updatePokemonUnlocked(pokemonId);
@@ -22,6 +29,15 @@ class gotNewPokemonPage extends StatelessWidget {
   int randomId() {
     int unlockedPokemonId = Random().nextInt(1000);
     return unlockedPokemonId;
+  }
+
+  void openStepCounter() async {
+    final totalStepsObject = await Navigator.pushNamed(
+      context,
+      '/stepCountPage',
+      arguments: {'totalSteps': totalSteps},
+    );
+    totalSteps = totalStepsObject as int;
   }
 
   @override
@@ -71,11 +87,7 @@ class gotNewPokemonPage extends StatelessWidget {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return StepCountPage();
-                      },
-                    ));
+                    openStepCounter();
                   },
                   child: Text('Gather another egg!'),
                 ),

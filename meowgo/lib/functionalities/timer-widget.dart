@@ -23,7 +23,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
 
   final Duration _targetDuration = const Duration(seconds: 1);
   Duration _duration = const Duration(seconds: 1);
-  String _result = "01:00";
+  String _result = "study!";
   bool _isRunning = false;
 
   int totalSteps = 0;
@@ -106,7 +106,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   void openGotNewPokemonPage() {
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
-        return const gotNewPokemonPage();
+        return const GotNewPokemonPage();
         // return GotEggPage();
       },
     ));
@@ -122,9 +122,14 @@ class _TimerWidget extends State<TimerStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: startStopButton(),
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: startStopButton(),
+        ),
+        Text(isHatchingEgg ? 'hoi' : 'nee'),
+      ],
     );
   }
 
