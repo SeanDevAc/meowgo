@@ -38,8 +38,8 @@ class DatabaseHelper {
     }
 
     // uncomment for windows support:
-    // sqfliteFfiInit();
-    // databaseFactory = databaseFactoryFfi;
+     sqfliteFfiInit();
+     databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;

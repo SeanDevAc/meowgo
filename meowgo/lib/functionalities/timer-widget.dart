@@ -23,12 +23,14 @@ class _TimerWidget extends State<TimerStatefulWidget> {
 
   final Duration _targetDuration = const Duration(seconds: 1);
   Duration _duration = const Duration(seconds: 1);
-  String _result = "study!";
+  String _result = "Study!";
   bool _isRunning = false;
 
   int totalSteps = 0;
 
   bool isHatchingEgg = false;
+
+  bool active = false;
 
   void _hatchingChoiceDialog() {
     showDialog(
@@ -41,6 +43,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
               TextButton(
                   onPressed: () {
                     isHatchingEgg = false;
+                    active =  true;
                     _start();
                     Navigator.pop(context);
                   },
@@ -48,6 +51,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
               TextButton(
                   onPressed: () {
                     isHatchingEgg = true;
+                    active = true;
                     _start();
                     Navigator.pop(context);
                   },
@@ -98,6 +102,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
 
   void _enoughTimeElapsed() {
     _resetTimer(_targetDuration);
+    active = false;
     print('enough time');
 
     !isHatchingEgg ? openStepCounter() : openGotNewPokemonPage();
@@ -120,18 +125,47 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: startStopButton(),
+@override
+Widget build(BuildContext context) {
+  return Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: startStopButton(),
+      ),
+      if (active) ...[
+        Card(
+          color: isHatchingEgg ? Colors.yellow : Colors.blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  isHatchingEgg ? Icons.egg : Icons.search,
+                  color: isHatchingEgg ? Colors.black : Colors.white,
+                ),
+                SizedBox(width: 8.0),
+                Text(
+                  isHatchingEgg ? 'Hatching egg...' : 'Finding eggs...',
+                  style: TextStyle(
+                    color: isHatchingEgg ? Colors.black : Colors.white,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        Text(isHatchingEgg ? 'hoi' : 'nee'),
       ],
-    );
-  }
+    ],
+  );
+}
+
+
 
   TextButton startStopButton() => TextButton(
       onPressed: _isRunning ? _stop : _hatchingChoiceDialog,
