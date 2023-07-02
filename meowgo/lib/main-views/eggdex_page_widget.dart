@@ -3,7 +3,6 @@ import 'package:meowgo/main-views/home-page-widget.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
-// import '../functionalities/pokemonAPI-widget.dart';
 
 class EggDexWidget extends StatefulWidget {
   const EggDexWidget({Key? key}) : super(key: key);
@@ -109,7 +108,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: 6.0,
+            height: 20.0,
             color: Colors.black,
           ),
           Container(
@@ -118,19 +117,41 @@ class _EggDexWidgetState extends State<EggDexWidget> {
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.black, width: 2.0),
+              border: Border.all(color: Colors.black, width: 20.0),
             ),
           ),
+          Container(
+            width: 140,
+            height: 140,
+            decoration: BoxDecoration(
+              color: Colors.red.shade50, // Change the color here
+              shape: BoxShape.circle,
+            ),
+          ),
+          
           Column(
             children: [
-              Padding(
+              Container(
                 padding: const EdgeInsets.all(8.0),
+                margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5.0,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
                 child: TextField(
                   controller: searchController,
                   onChanged: filterPokemon,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Search Pokémon',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -164,7 +185,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                                 color: Colors.black54,
                                 alignment: Alignment.center,
                                 child: const Text(
-                                  'Pokemon added to party',
+                                  'Pokemon set as Party',
                                   style: TextStyle(
                                     color: Colors.white, // Change the color here
                                     fontSize: 18.0,
