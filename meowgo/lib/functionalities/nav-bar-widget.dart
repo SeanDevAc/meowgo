@@ -38,7 +38,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
       appBar: AppBar(
         //title: pages[currentPageIndex],
         leading: const TimerStatefulWidget(),
-        leadingWidth: 200.0,
+        leadingWidth: 2000.0,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
