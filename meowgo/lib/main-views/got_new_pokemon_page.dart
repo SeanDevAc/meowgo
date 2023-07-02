@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/main-views/step_count_page.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
@@ -98,12 +97,12 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
                       ),
                     ),
                   ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    openStepCounter();
-                  },
-                  child: Text('Gather another egg!'),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      openStepCounter();
+                    },
+                    child: Text('Gather another egg!'),
                   ),
                 ],
               ),
@@ -114,5 +113,3 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
     );
   }
 }
-
-

@@ -13,9 +13,9 @@ class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -55,7 +55,7 @@ class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
           ),
           Column(
             children: [
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton.icon(
                 onPressed: () {
                   setState(() {
@@ -63,20 +63,24 @@ class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
                   });
                 },
                 icon: Icon(isUnlocked ? Icons.lock_open : Icons.lock),
-                label: Text(isUnlocked ? "Lock Reset Button" : "Unlock Reset Button"),
+                label: Text(
+                    isUnlocked ? "Lock Reset Button" : "Unlock Reset Button"),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Opacity(
                 opacity: isUnlocked ? 1.0 : 0.5,
                 child: TextButton(
-                  onPressed: isUnlocked ? () => _showResetConfirmationDialog(context) : null,
+                  onPressed: isUnlocked
+                      ? () => _showResetConfirmationDialog(context)
+                      : null,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
                       color: Colors.white,
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(width: 8.0),
@@ -104,22 +108,22 @@ class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Reset Collection"),
-          content:
-              Text("Are you sure you want to reset your Pokemon collection?"),
+          title: const Text("Reset Collection"),
+          content: const Text(
+              "Are you sure you want to reset your Pokemon collection?"),
           actions: [
             TextButton(
               onPressed: () {
                 DatabaseHelper().nukeDatabaseAndFill();
                 Navigator.of(context).pop();
               },
-              child: Text("Reset"),
+              child: const Text("Reset"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
           ],
         );

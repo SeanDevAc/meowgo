@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
-import './eggdex_page_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -98,24 +97,28 @@ class _HomePageState extends State<HomePage> {
                                 return PokemonWidget(pokemon: snapshot.data!);
                               } else {
                                 return Center(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(16.0),
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(255, 223, 71, 71),
-                                        borderRadius: BorderRadius.circular(16.0),
-                                        border: Border.all(color: Color.fromARGB(255, 182, 56, 47), width: 5.0),
-                                      ),
-                                      child: Text(
-                                        'No pokemon is selected right now',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24.0,
-                                        ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16.0),
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 223, 71, 71),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      border: Border.all(
+                                          color:
+                                              Color.fromARGB(255, 182, 56, 47),
+                                          width: 5.0),
+                                    ),
+                                    child: Text(
+                                      'No pokemon is selected right now',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24.0,
                                       ),
                                     ),
-                                  );
+                                  ),
+                                );
                               }
                             },
                           ),

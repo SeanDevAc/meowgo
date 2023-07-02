@@ -3,10 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:meowgo/component/db_helper.dart';
 import 'dart:async';
-import '../main-views/settings-page-widget.dart';
-import 'package:pedometer/pedometer.dart';
-import '../main-views/step_count_page.dart';
-import '../main-views/got_egg_page.dart';
+
 import '../main-views/got_new_pokemon_page.dart';
 
 class TimerStatefulWidget extends StatefulWidget
@@ -25,8 +22,8 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  final Duration _targetDuration = const Duration(seconds: 1);
-  Duration _duration = const Duration(seconds: 1);
+  final Duration _targetDuration = const Duration(seconds: 20);
+  Duration _duration = const Duration(seconds: 20);
   String _result = "Study!";
   bool _isRunning = false;
 

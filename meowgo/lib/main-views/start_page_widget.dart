@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meowgo/functionalities/nav-bar-widget.dart';
-import 'package:meowgo/main-views/home-page-widget.dart';
-import 'package:meowgo/main-views/step_count_page.dart';
 import '../component/db_helper.dart';
 
 class StartPageWidget extends StatefulWidget {

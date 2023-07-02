@@ -19,7 +19,9 @@ class StepCountPage extends StatefulWidget {
 class _StepCountPageState extends State<StepCountPage> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _stepsString = '?';
+  // ignore: unused_field
+  String _status = '?';
+  String _stepsString = '?';
   final int targetSteps = 10;
   int totalSteps = 0;
   int prevSteps = 0;

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/component/db_helper.dart';
-import 'package:meowgo/functionalities/pokemonAPI-widget.dart';
 
 import './timer-widget.dart';
 
 import '../main-views/home-page-widget.dart';
 import '../main-views/settings-page-widget.dart';
 import '../main-views/eggdex_page_widget.dart';
-import '../component/db_helper.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
   const StudyMonStatefulWidget({Key? key}) : super(key: key);

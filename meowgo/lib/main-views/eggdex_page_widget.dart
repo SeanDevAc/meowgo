@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/main-views/home-page-widget.dart';
 import '../component/db_helper.dart';
 import '../component/pokemonwidget.dart';
 import '../component/pokemon.dart';
@@ -128,12 +127,12 @@ class _EggDexWidgetState extends State<EggDexWidget> {
               shape: BoxShape.circle,
             ),
           ),
-          
           Column(
             children: [
               Container(
                 padding: const EdgeInsets.all(8.0),
-                margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                margin: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 24.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
@@ -187,7 +186,8 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                                 child: const Text(
                                   'Pokemon set as Party',
                                   style: TextStyle(
-                                    color: Colors.white, // Change the color here
+                                    color:
+                                        Colors.white, // Change the color here
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold,
                                   ),
