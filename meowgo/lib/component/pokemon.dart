@@ -5,6 +5,7 @@ class Pokemon {
   final String type;
   final int unlocked;
   final int pokemonNumber;
+  final int pokemonActive;
 
   Pokemon({
     required this.name,
@@ -13,6 +14,7 @@ class Pokemon {
     required this.type,
     required this.unlocked,
     required this.pokemonNumber,
+    required this.pokemonActive,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,15 @@ class Pokemon {
       'type': type,
       'unlocked': unlocked,
       'pokemonNumber': pokemonNumber,
+      'pokemonActive': pokemonActive,
     };
+  }
+
+  int getPokemonNumber(){
+    return pokemonNumber;
+  }
+
+  String getPokemonName(){
+    return name;
   }
 }

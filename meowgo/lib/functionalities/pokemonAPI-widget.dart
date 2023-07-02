@@ -34,6 +34,7 @@ class PokeApiWidget {
           type: details['types'][0]['type']['name'],
           unlocked: i < 3 ? 1 : 0,
           pokemonNumber: i + 1,
+          pokemonActive: 0,
         );
 
         DatabaseHelper().insertPokemon(pokemon);
