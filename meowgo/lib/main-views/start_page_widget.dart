@@ -52,19 +52,20 @@ class _StartPageState extends State<StartPageWidget> {
             Text(
               'Studémon!',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 50,
                 // color: Color.fromARGB(255, 255, 255, 255),
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
-                  ..strokeWidth = 10
-                  ..color = Colors.white,
+                  ..strokeWidth = 15
+                  ..color = Colors.black,
               ),
             ),
             const Text(
               'Studémon!',
-              style: TextStyle(fontSize: 24, color: Colors.black),
+              style: TextStyle(fontSize: 50, color: Colors.yellow),
             ),
           ]),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               Navigator.push(

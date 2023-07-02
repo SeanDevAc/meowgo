@@ -97,8 +97,25 @@ class _HomePageState extends State<HomePage> {
                               } else if (snapshot.hasData) {
                                 return PokemonWidget(pokemon: snapshot.data!);
                               } else {
-                                return const Text(
-                                    'No pokemon is following you');
+                                return Center(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16.0),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(255, 223, 71, 71),
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        border: Border.all(color: Color.fromARGB(255, 182, 56, 47), width: 5.0),
+                                      ),
+                                      child: Text(
+                                        'No pokemon is selected right now',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24.0,
+                                        ),
+                                      ),
+                                    ),
+                                  );
                               }
                             },
                           ),
