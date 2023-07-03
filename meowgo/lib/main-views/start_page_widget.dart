@@ -47,30 +47,31 @@ class _StartPageState extends State<StartPageWidget> {
                 stops: stops,
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(children: [
-                  Text(
-                    'Studémon!',
-                    style: TextStyle(
-                      fontSize: 50,
-                      // color: Color.fromARGB(255, 255, 255, 255),
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 10
-                        ..color = Colors.black,
+            child: Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Stack(children: [
+                    Text(
+                      'Studémon!',
+                      style: TextStyle(
+                        fontSize: 50,
+                        // color: Color.fromARGB(255, 255, 255, 255),
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 10
+                          ..color = Colors.black,
+                      ),
                     ),
-                  ),
-                  const Text(
-                    'Studémon!',
-                    style: TextStyle(fontSize: 50, color: Colors.yellow),
-                  ),
-                ]),
-                const SizedBox(
-                  height: 100,
-                )
-              ],
+                    const Text(
+                      'Studémon!',
+                      style: TextStyle(fontSize: 50, color: Colors.yellow),
+                    ),
+                  ]),
+                ],
+              ),
             ),
           );
   }

@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       const Text(
-                        'Active Pokemon: ',
+                        'Studying with: ',
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
