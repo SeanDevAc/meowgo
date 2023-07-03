@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/component/db_helper.dart';
+import 'package:meowgo/pokemon_helpers/db_helper.dart';
 
-class SettingsStatsWidget extends StatefulWidget {
-  const SettingsStatsWidget({Key? key}) : super(key: key);
+class SettingsWidget extends StatefulWidget {
+  const SettingsWidget({Key? key}) : super(key: key);
 
   @override
-  State<SettingsStatsWidget> createState() => _SettingsStatsWidgetState();
+  State<SettingsWidget> createState() => _SettingsWidgetState();
 }
 
-class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
+class _SettingsWidgetState extends State<SettingsWidget> {
   bool isUnlocked = false;
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(

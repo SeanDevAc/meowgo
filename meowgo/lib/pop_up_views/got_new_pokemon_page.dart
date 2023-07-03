@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../component/db_helper.dart';
-import '../component/pokemonwidget.dart';
-import '../component/pokemon.dart';
+import '../pokemon_helpers/db_helper.dart';
+import '../pokemon_helpers/pokemon_widget.dart';
+import '../pokemon_helpers/pokemon.dart';
 import 'dart:math';
 
 class GotNewPokemonPage extends StatefulWidget {
@@ -14,34 +14,34 @@ class GotNewPokemonPage extends StatefulWidget {
 }
 
 class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
-  // Future<List<Pokemon>> _loadPokemonList() async {
-  //   return await DatabaseHelper().getAllPokemon();
-  // }
-
   int totalSteps = 0;
+  int unlockedPokemonId = 0;
+  bool isFirstLoad = true;
 
   Future<Pokemon> getUnlockedPokemon(int pokemonId) async {
     DatabaseHelper().updatePokemonUnlocked(pokemonId);
     return DatabaseHelper().getPokemonByNumber(pokemonId);
   }
 
-  int randomId() {
-    int unlockedPokemonId = Random().nextInt(1000);
-    return unlockedPokemonId;
+  void setRandomId() {
+    if (isFirstLoad) {
+      setState(() {
+        unlockedPokemonId = Random().nextInt(1000);
+      });
+      isFirstLoad = false;
+    }
   }
 
   void openStepCounter() async {
-    // final totalStepsObject =
     await Navigator.pushNamed(
       context,
       '/stepCountPage',
-      // arguments: {'totalSteps': totalSteps},
     );
-    // totalSteps = totalStepsObject as int;
   }
 
   @override
   Widget build(BuildContext context) {
+    setRandomId();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -91,7 +91,7 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
                       widthFactor: 0.5,
                       heightFactor: 0.5,
                       child: FutureBuilder(
-                        future: getUnlockedPokemon(randomId()),
+                        future: getUnlockedPokemon(unlockedPokemonId),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return const Text(

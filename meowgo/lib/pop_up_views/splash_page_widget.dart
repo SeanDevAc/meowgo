@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/functionalities/nav_bar_widget.dart';
-import '../component/db_helper.dart';
+import 'package:meowgo/nav_bars/studymon_bottom_nav_widget.dart';
+import '../pokemon_helpers/db_helper.dart';
 
-class StartPageWidget extends StatefulWidget {
-  const StartPageWidget({Key? key}) : super(key: key);
+class SplashPageWidget extends StatefulWidget {
+  const SplashPageWidget({Key? key}) : super(key: key);
 
   @override
-  State<StartPageWidget> createState() => _StartPageState();
+  State<SplashPageWidget> createState() => _SplashPageState();
 }
 
-class _StartPageState extends State<StartPageWidget> {
+class _SplashPageState extends State<SplashPageWidget> {
   bool canProceed = false;
 
   evenWachten() async {
@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPageWidget> {
     final stops = [0.0, 0.5, 0.5, 1.0];
 
     return canProceed
-        ? const StudyMonStatefulWidget()
+        ? const StudyMonNav()
         : Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -58,7 +58,6 @@ class _StartPageState extends State<StartPageWidget> {
                       'Studémon!',
                       style: TextStyle(
                         fontSize: 50,
-                        // color: Color.fromARGB(255, 255, 255, 255),
                         foreground: Paint()
                           ..style = PaintingStyle.stroke
                           ..strokeWidth = 10

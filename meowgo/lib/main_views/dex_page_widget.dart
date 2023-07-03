@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../component/db_helper.dart';
-import '../component/pokemonwidget.dart';
-import '../component/pokemon.dart';
+import '../pokemon_helpers/db_helper.dart';
+import '../pokemon_helpers/pokemon_widget.dart';
+import '../pokemon_helpers/pokemon.dart';
 
-class EggDexWidget extends StatefulWidget {
-  const EggDexWidget({Key? key}) : super(key: key);
+class DexWidget extends StatefulWidget {
+  const DexWidget({Key? key}) : super(key: key);
 
   @override
-  State<EggDexWidget> createState() => _EggDexWidgetState();
+  State<DexWidget> createState() => _DexWidgetState();
 }
 
-class _EggDexWidgetState extends State<EggDexWidget> {
+class _DexWidgetState extends State<DexWidget> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
   List<Pokemon> allUnlockedPokemon = [];
