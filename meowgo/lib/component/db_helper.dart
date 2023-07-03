@@ -2,7 +2,6 @@
 
 import 'package:meowgo/functionalities/pokemon_api_widget.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
 
@@ -36,8 +35,8 @@ class DatabaseHelper {
     }
 
     // uncomment for windows support:
-    //  sqfliteFfiInit();
-    //  databaseFactory = databaseFactoryFfi;
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
 
     _database = await _initDatabase();
     return _database!;

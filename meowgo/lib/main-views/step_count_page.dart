@@ -22,7 +22,7 @@ class _StepCountPageState extends State<StepCountPage> {
   // ignore: unused_field
   String _status = '?';
   String _stepsString = '?';
-  final int targetSteps = 10;
+  final int targetSteps = 20;
   int totalSteps = 0;
   int prevSteps = 0;
   int _currentSteps = 0;
@@ -145,13 +145,15 @@ class _StepCountPageState extends State<StepCountPage> {
     // }
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 41, 42, 42),
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
               goBackWithEgg(false);
             },
           ),
-          title: const Text('Congrats!'),
+          backgroundColor: Colors.redAccent,
+          title: const Text('Nice!'),
         ),
         body: Center(
           child: Column(
@@ -159,10 +161,8 @@ class _StepCountPageState extends State<StepCountPage> {
             children: <Widget>[
               const SizedBox(height: 20),
               Text(
-                "You got an egg!\nnow take $targetSteps steps for another egg!",
-                style: const TextStyle(
-                  fontSize: 20,
-                ),
+                "Take $targetSteps steps to get an extra egg!",
+                style: const TextStyle(fontSize: 20, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -170,11 +170,11 @@ class _StepCountPageState extends State<StepCountPage> {
               ),
               const Text(
                 'Steps Taken',
-                style: TextStyle(fontSize: 26),
+                style: TextStyle(fontSize: 26, color: Colors.white),
               ),
               Text(
                 _stepsString,
-                style: const TextStyle(fontSize: 40),
+                style: const TextStyle(fontSize: 40, color: Colors.white),
               ),
 
               SizedBox(
@@ -224,7 +224,7 @@ class _StepCountPageState extends State<StepCountPage> {
                         : goBackWithEgg(enoughSteps),
                     child: Text(enoughSteps
                         ? 'Receive egg!'
-                        : 'no thanks, take me back')),
+                        : 'no thanks, take me home')),
               )
             ],
           ),

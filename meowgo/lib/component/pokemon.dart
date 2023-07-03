@@ -29,11 +29,11 @@ class Pokemon {
     };
   }
 
-  int getPokemonNumber(){
+  int getPokemonNumber() {
     return pokemonNumber;
   }
 
-  String getPokemonName(){
+  String getPokemonName() {
     return name;
   }
 }
