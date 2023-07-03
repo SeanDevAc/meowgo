@@ -65,14 +65,14 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   }
 
   void addToInventory(Pokemon pokemon) {
-    if (partyList.length >= 1) {
+    if (partyList.isNotEmpty) {
       return;
     }
     setState(() {
       partyList.add(pokemon);
     });
     toggleActivePokemon(pokemon.getPokemonNumber(), 1);
-    print('Pokemon $pokemon Selected');
+    // print('Pokemon $pokemon Selected');
   }
 
   void removeFromInventory(Pokemon pokemon) {
@@ -89,7 +89,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -147,9 +147,9 @@ class _EggDexWidgetState extends State<EggDexWidget> {
                 child: TextField(
                   controller: searchController,
                   onChanged: filterPokemon,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Search Pokémon',
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: Icon(Icons.search),
                     border: InputBorder.none,
                   ),
                 ),

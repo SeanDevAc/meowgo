@@ -7,7 +7,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 
   static void setSelectedPokemon(Pokemon pokemon) {}
 }
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Center(
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.8,
                   width: MediaQuery.of(context).size.height * 0.8,
                   child: Column(
@@ -104,11 +104,11 @@ class _HomePageState extends State<HomePage> {
                                           255, 223, 71, 71),
                                       borderRadius: BorderRadius.circular(16.0),
                                       border: Border.all(
-                                          color:
-                                              Color.fromARGB(255, 182, 56, 47),
+                                          color: const Color.fromARGB(
+                                              255, 182, 56, 47),
                                           width: 5.0),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       'No pokemon is selected right now',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(

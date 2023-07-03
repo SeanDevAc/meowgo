@@ -11,7 +11,7 @@ class TimerStatefulWidget extends StatefulWidget
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
 
-  TimerStatefulWidget({super.key});
+  const TimerStatefulWidget({super.key});
 
   @override
   State<TimerStatefulWidget> createState() => _TimerWidget();

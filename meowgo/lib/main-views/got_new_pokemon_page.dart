@@ -14,9 +14,9 @@ class GotNewPokemonPage extends StatefulWidget {
 }
 
 class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
-  Future<List<Pokemon>> _loadPokemonList() async {
-    return await DatabaseHelper().getAllPokemon();
-  }
+  // Future<List<Pokemon>> _loadPokemonList() async {
+  //   return await DatabaseHelper().getAllPokemon();
+  // }
 
   int totalSteps = 0;
 
@@ -54,7 +54,7 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
               Colors.white,
               Colors.yellow.withOpacity(1.0),
             ],
-            stops: [0.0, 0.2, 1.0],
+            stops: const [0.0, 0.2, 1.0],
             center: Alignment.center,
             radius: 1.0,
           ),

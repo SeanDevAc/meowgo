@@ -23,7 +23,7 @@ class GotEggPage extends StatelessWidget {
               child: const Text('Extra egg?'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return StepCountPage(); //variabele meegeven?
+                  return const StepCountPage(); //variabele meegeven?
                 }));
               },
             ),

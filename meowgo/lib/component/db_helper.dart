@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:meowgo/functionalities/pokemonAPI-widget.dart';
+import 'package:meowgo/functionalities/pokemon_api_widget.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -175,7 +175,7 @@ class DatabaseHelper {
 
   Future<void> addEggs(int eggAmount) async {
     final db = await database;
-    print('added eggs: $eggAmount');
+    // print('added eggs: $eggAmount');
 
     await db.execute('''
       UPDATE $inventoryTable 
@@ -226,12 +226,12 @@ class DatabaseHelper {
           )
 
       ''');
-      print('steps table added');
+      // print('steps table added');
       return 0;
     }
 
     final amount = maps[0]['amount'] as int;
-    print(amount);
+    // print(amount);
     return amount;
   }
 
@@ -254,21 +254,21 @@ class DatabaseHelper {
       WHERE $columnPokemonNumber = $unlockedPokemon;
     ''');
 
-    print('Pokemon unlocked updated successfully: $unlockedPokemon');
+    // print('Pokemon unlocked updated successfully: $unlockedPokemon');
     return unlockedPokemon;
   }
 
-  Future<int> updatePokemonActive(int PokemonId, int updatedStatus) async {
+  Future<int> updatePokemonActive(int pokemonId, int updatedStatus) async {
     final db = await database;
 
     await db.execute('''
       UPDATE $table 
       SET $columnPokemonActive = $updatedStatus
-      WHERE $columnPokemonNumber = $PokemonId;
+      WHERE $columnPokemonNumber = $pokemonId;
     ''');
 
-    print('Pokemon Active updated successfully: $PokemonId');
-    return PokemonId;
+    // print('Pokemon Active updated successfully: $pokemonId');
+    return pokemonId;
   }
 
   Future<void> resetPokemonActive() async {
@@ -279,7 +279,7 @@ class DatabaseHelper {
       SET $columnPokemonActive = 0
     ''');
 
-    print('reset pokemonActive status');
+    // print('reset pokemonActive status');
   }
 
   void _createDb(Database db) async {

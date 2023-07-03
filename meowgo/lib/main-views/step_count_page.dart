@@ -13,7 +13,7 @@ class StepCountPage extends StatefulWidget {
   const StepCountPage({super.key});
 
   @override
-  _StepCountPageState createState() => _StepCountPageState();
+  State<StepCountPage> createState() => _StepCountPageState();
 }
 
 class _StepCountPageState extends State<StepCountPage> {

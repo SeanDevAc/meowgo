@@ -5,7 +5,7 @@ class SettingsStatsWidget extends StatefulWidget {
   const SettingsStatsWidget({Key? key}) : super(key: key);
 
   @override
-  _SettingsStatsWidgetState createState() => _SettingsStatsWidgetState();
+  State<SettingsStatsWidget> createState() => _SettingsStatsWidgetState();
 }
 
 class _SettingsStatsWidgetState extends State<SettingsStatsWidget> {
