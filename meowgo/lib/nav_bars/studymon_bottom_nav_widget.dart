@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'timer_widget.dart';
+import 'top_app_bar_timer_widget.dart';
 
-import '../main-views/home_page_widget.dart';
-import '../main-views/settings_page_widget.dart';
-import '../main-views/eggdex_page_widget.dart';
+import '../main_views/home_page_widget.dart';
+import '../main_views/settings_page_widget.dart';
+import '../main_views/dex_page_widget.dart';
 
-class StudyMonStatefulWidget extends StatefulWidget {
-  const StudyMonStatefulWidget({Key? key}) : super(key: key);
+class StudyMonNav extends StatefulWidget {
+  const StudyMonNav({Key? key}) : super(key: key);
 
   @override
-  State<StudyMonStatefulWidget> createState() => _StudyMonState();
+  State<StudyMonNav> createState() => _StudyMonNavState();
 }
 
-class _StudyMonState extends State<StudyMonStatefulWidget> {
+class _StudyMonNavState extends State<StudyMonNav> {
   @override
   void initState() {
     super.initState();
@@ -30,12 +30,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TimerStatefulWidget(),
-      // AppBar(
-      //   //title: pages[currentPageIndex],
-      //   leading: const TimerStatefulWidget(),
-      //   leadingWidth: 2000.0,
-      // ),
+      appBar: const TopAppBarTimerWidget(),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
           setState(() {
@@ -59,9 +54,9 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
         ],
       ),
       body: <Widget>[
-        const HomePage(),
-        const EggDexWidget(),
-        const SettingsStatsWidget(),
+        const HomePageWidget(),
+        const DexWidget(),
+        const SettingsWidget(),
       ][currentPageIndex],
     );
   }

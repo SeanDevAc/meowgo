@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/component/db_helper.dart';
+import 'package:meowgo/pokemon_helpers/db_helper.dart';
 import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 
-import '../component/pokemonwidget.dart';
+import '../pokemon_helpers/pokemon_widget.dart';
 
 String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
@@ -18,17 +18,12 @@ class StepCountPage extends StatefulWidget {
 
 class _StepCountPageState extends State<StepCountPage> {
   late Stream<StepCount> _stepCountStream;
-  late Stream<PedestrianStatus> _pedestrianStatusStream;
-  // ignore: unused_field
-  String _status = '?';
   String _stepsString = '?';
   final int targetSteps = 20;
   int totalSteps = 0;
-  int prevSteps = 0;
   int _currentSteps = 0;
 
   bool isFirstRun = true;
-  bool mustBeInitialized = true;
   bool enoughSteps = false;
 
   @override
@@ -45,21 +40,12 @@ class _StepCountPageState extends State<StepCountPage> {
         isFirstRun = false;
       });
     }
-    if (mustBeInitialized) {
-      setState(() {
-        totalSteps = event.steps;
-        // print('INIT RAN: $totalSteps');
-        mustBeInitialized = false;
-      });
-    }
-    // als dit in de achtergrond runt:
+
     if (!mounted) {
       totalSteps = event.steps;
       // print('not mounted');
       return;
     }
-    // totalSteps hier op first run op 0 for some reason
-    // print('evensteps: ${event.steps}\n totalSteps: $totalSteps');
     setState(() {
       //grootste getal vanuit event - wat het meekrijgt uit prev
       _currentSteps = event.steps - totalSteps;
@@ -67,7 +53,6 @@ class _StepCountPageState extends State<StepCountPage> {
     });
 
     if (_currentSteps >= targetSteps) {
-      // setStepsAmount(event.steps);
       // print('current: $_currentSteps\ntotal: $totalSteps');
       enoughStepsTaken();
     }
@@ -80,39 +65,10 @@ class _StepCountPageState extends State<StepCountPage> {
 
   void goBackWithEgg(bool gotEgg) {
     if (gotEgg) {
-      //iets met ei erbij
       DatabaseHelper().addEggs(1);
-    } else {}
+    }
     Navigator.of(context).popUntil((route) => route.isFirst);
-    // Navigator.popUntil(context, ModalRoute.withName('/home'));
     isFirstRun = true;
-  }
-
-  void updateTotalSteps(StepCount event) {
-    totalSteps = event.steps;
-  }
-
-  // Future<int> getStepsAmount() async {
-  //   stepsAmount = await DatabaseHelper().getStepsAmount();
-  //   return stepsAmount;
-  // }
-
-  void onPedestrianStatusChanged(PedestrianStatus event) {
-    if (!mounted) {
-      return;
-    } else {}
-    setState(() {
-      _status = event.status;
-    });
-  }
-
-  void onPedestrianStatusError(error) {
-    // print('onPedestrianStatusError: $error');
-    if (!mounted) return;
-    setState(() {
-      _status = 'Pedestrian Status not available';
-    });
-    // print(_status);
   }
 
   void onStepCountError(error) {
@@ -124,11 +80,6 @@ class _StepCountPageState extends State<StepCountPage> {
   }
 
   void initPlatformState() {
-    _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
-    _pedestrianStatusStream
-        .listen(onPedestrianStatusChanged)
-        .onError(onPedestrianStatusError);
-
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(onStepCount).onError(onStepCountError);
 
@@ -137,12 +88,6 @@ class _StepCountPageState extends State<StepCountPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final prev =
-    //     (ModalRoute.of(context)?.settings.arguments ?? <int, dynamic>{}) as Map;
-    // prevSteps = prev['totalSteps'];
-    // if (prevSteps != 0) {
-    //   totalSteps = prevSteps;
-    // }
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 41, 42, 42),
@@ -176,7 +121,6 @@ class _StepCountPageState extends State<StepCountPage> {
                 _stepsString,
                 style: const TextStyle(fontSize: 40, color: Colors.white),
               ),
-
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.height * 0.4,
@@ -206,10 +150,6 @@ class _StepCountPageState extends State<StepCountPage> {
                   ],
                 ),
               ),
-              // Icon(
-              //   _status == 'walking' ? Icons.egg : Icons.catching_pokemon,
-              //   size: 100,
-              // ),
               Center(
                 child: ElevatedButton(
                     style: ButtonStyle(

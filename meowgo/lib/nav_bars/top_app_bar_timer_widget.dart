@@ -1,24 +1,23 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:meowgo/component/db_helper.dart';
+import 'package:meowgo/pokemon_helpers/db_helper.dart';
 import 'dart:async';
 
-import '../main-views/got_new_pokemon_page.dart';
+import '../pop_up_views/got_new_pokemon_page.dart';
 
-class TimerStatefulWidget extends StatefulWidget
+class TopAppBarTimerWidget extends StatefulWidget
     implements PreferredSizeWidget {
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
 
-  const TimerStatefulWidget({super.key});
+  const TopAppBarTimerWidget({super.key});
 
   @override
-  State<TimerStatefulWidget> createState() => _TimerWidget();
+  State<TopAppBarTimerWidget> createState() => _TopAppBarWidgetState();
 }
 
-class _TimerWidget extends State<TimerStatefulWidget> {
-  //init stopwatch instance
+class _TopAppBarWidgetState extends State<TopAppBarTimerWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
@@ -30,7 +29,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   int totalSteps = 0;
 
   bool isHatchingEgg = false;
-  // late int? _hasEggs;
   int eggsAmount = 0;
 
   bool active = false;
@@ -79,9 +77,7 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      //setState voor UI update
       setState(() {
-        //format result
         if (_duration.inSeconds > 0) {
           _duration = _duration - const Duration(seconds: 1);
           _result =
@@ -104,21 +100,17 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   }
 
   void openStepCounter() async {
-    // final totalStepsObject =
     DatabaseHelper().addEggs(1);
     await Navigator.pushNamed(
       context,
       '/stepCountPage',
-      // arguments: {'totalSteps': totalSteps},
     );
-    // totalSteps = totalStepsObject as int;
   }
 
   void _enoughTimeElapsed() {
     _resetTimer(_targetDuration);
     active = false;
     print('enough time');
-
     !isHatchingEgg ? openStepCounter() : openGotNewPokemonPage();
   }
 
@@ -127,7 +119,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     Navigator.push(context, MaterialPageRoute<void>(
       builder: (BuildContext context) {
         return const GotNewPokemonPage();
-        // return GotEggPage();
       },
     ));
   }
@@ -178,7 +169,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
             color: Color.fromARGB(152, 255, 252, 252)),
       ));
     } else {
-      // if (condition) {}
       for (var i = amount; i > 0; i--) {
         result.add(const Row(children: [
           Icon(
@@ -194,10 +184,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
     ));
     return result;
   }
-
-  // Future<int?> getEggsAmount() async {
-  //   _hasEggs = await const EggCounterStateful().getEggAmount();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -247,45 +233,6 @@ class _TimerWidget extends State<TimerStatefulWidget> {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
     );
-
-    // ignore: dead_code
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: startStopButton(),
-        ),
-        if (active) ...[
-          Card(
-            color: isHatchingEgg ? Colors.yellow : Colors.blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    isHatchingEgg ? Icons.egg : Icons.search,
-                    color: isHatchingEgg ? Colors.black : Colors.white,
-                  ),
-                  const SizedBox(width: 8.0),
-                  Text(
-                    isHatchingEgg ? 'Hatching egg...' : 'Finding eggs...',
-                    style: TextStyle(
-                      color: isHatchingEgg ? Colors.black : Colors.white,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ],
-    );
   }
 
   TextButton startStopButton() => TextButton(
@@ -296,7 +243,5 @@ class _TimerWidget extends State<TimerStatefulWidget> {
               ? const MaterialStatePropertyAll<Color>(Colors.redAccent)
               : const MaterialStatePropertyAll<Color>(Colors.green),
           foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white)),
-      child: Text(_result) //dit is voor de tijd zelf, hieronder is play/pause
-      // Icon(_isRunning ? Icons.pause : Icons.play_arrow)
-      );
+      child: Text(_result));
 }

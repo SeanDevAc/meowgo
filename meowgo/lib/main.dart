@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/main-views/got_new_pokemon_page.dart';
-import 'package:meowgo/main-views/start_page_widget.dart';
-import 'package:meowgo/main-views/step_count_page.dart';
+import 'package:meowgo/pop_up_views/got_new_pokemon_page.dart';
+import 'package:meowgo/pop_up_views/splash_page_widget.dart';
+import 'package:meowgo/pop_up_views/step_count_page.dart';
 
-import 'functionalities/nav_bar_widget.dart';
+import 'nav_bars/studymon_bottom_nav_widget.dart';
 
 void main() {
   runApp(
@@ -21,13 +21,13 @@ class StudyMonApp extends StatelessWidget {
       routes: {
         '/stepCountPage': (context) => const StepCountPage(),
         '/hatchedPokemonPage': (context) => const GotNewPokemonPage(),
-        '/home': (context) => const StudyMonStatefulWidget()
+        '/home': (context) => const StudyMonNav()
       },
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(172, 255, 38, 38))),
-      home: const StartPageWidget(),
+      home: const SplashPageWidget(),
     );
   }
 }

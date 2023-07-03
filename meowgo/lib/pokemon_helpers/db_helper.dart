@@ -1,6 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages
+import 'dart:io';
 
-import 'package:meowgo/functionalities/pokemon_api_widget.dart';
+import 'package:meowgo/pokemon_helpers/pokemon_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
 import 'pokemon.dart';
@@ -19,9 +19,6 @@ class DatabaseHelper {
   final columnPokemonNumber = 'pokemonNumber';
   final columnPokemonActive = 'pokemonActive';
 
-//inventory:
-// id 0 Eggs
-// id 1 Steps
   final inventoryTable = 'inventory_table';
   final inventoryId = 'id';
   final inventoryDescription = 'description';
@@ -34,9 +31,10 @@ class DatabaseHelper {
       return _database!;
     }
 
-    // uncomment for windows support:
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
+    if (!Platform.isIOS) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
 
     _database = await _initDatabase();
     return _database!;
@@ -57,7 +55,7 @@ class DatabaseHelper {
     );
 
     if (maps.isEmpty) {
-      PokeApiWidget.fetchAllPokemon();
+      PokemonApi.fetchAllPokemon();
       return;
     }
 
@@ -206,42 +204,6 @@ class DatabaseHelper {
 
     final amount = maps[0]['amount'] as int;
     return amount;
-  }
-
-  Future<int> getStepsAmount() async {
-    final db = await database;
-    final List<Map<String, Object?>> maps = await db.query(
-      inventoryTable,
-      where: '$inventoryId = ?',
-      whereArgs: [1],
-    );
-
-    if (maps.isEmpty) {
-      await db.rawInsert('''
-        INSERT INTO $inventoryTable(
-          $inventoryId, $inventoryDescription, $inventoryAmount)
-          VALUES(
-            1, 'steps', 0
-          )
-
-      ''');
-      // print('steps table added');
-      return 0;
-    }
-
-    final amount = maps[0]['amount'] as int;
-    // print(amount);
-    return amount;
-  }
-
-  Future<void> setStepsAmount(int stepsAmount) async {
-    final db = await database;
-
-    await db.execute('''
-      UPDATE $inventoryTable 
-      SET $inventoryAmount = $stepsAmount
-      WHERE $inventoryId = 1;
-''');
   }
 
   Future<int> updatePokemonUnlocked(int unlockedPokemon) async {

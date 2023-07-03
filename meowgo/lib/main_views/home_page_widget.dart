@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../component/db_helper.dart';
-import '../component/pokemonwidget.dart';
-import '../component/pokemon.dart';
+import '../pokemon_helpers/db_helper.dart';
+import '../pokemon_helpers/pokemon_widget.dart';
+import '../pokemon_helpers/pokemon.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePageWidget extends StatefulWidget {
+  const HomePageWidget({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageWidget> createState() => _HomePageWidgetState();
 
   static void setSelectedPokemon(Pokemon pokemon) {}
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   void initState() {
     super.initState();
@@ -31,10 +31,10 @@ class _HomePageState extends State<HomePage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.red, // Change the color here
-              Colors.red, // Change the color here
-              Colors.white, // Change the color here
-              Colors.white, // Change the color here
+              Colors.red,
+              Colors.red,
+              Colors.white,
+              Colors.white,
             ],
             stops: [0.0, 0.5, 0.5, 1.0],
           ),
