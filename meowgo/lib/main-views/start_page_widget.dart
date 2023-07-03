@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meowgo/functionalities/nav-bar-widget.dart';
+import 'package:meowgo/functionalities/nav_bar_widget.dart';
 import '../component/db_helper.dart';
 
 class StartPageWidget extends StatefulWidget {

@@ -22,8 +22,8 @@ class _TimerWidget extends State<TimerStatefulWidget> {
   final Stopwatch _stopwatch = Stopwatch();
   late Timer _timer;
 
-  final Duration _targetDuration = const Duration(seconds: 20);
-  Duration _duration = const Duration(seconds: 20);
+  final Duration _targetDuration = const Duration(seconds: 3);
+  Duration _duration = const Duration(seconds: 3);
   String _result = "Study!";
   bool _isRunning = false;
 
