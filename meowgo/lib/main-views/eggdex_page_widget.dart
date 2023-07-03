@@ -128,7 +128,7 @@ class _EggDexWidgetState extends State<EggDexWidget> {
             ),
           ),
           Container(
-            constraints: BoxConstraints(maxWidth: 800),
+            constraints: const BoxConstraints(maxWidth: 800),
             child: Column(
               children: [
                 Container(

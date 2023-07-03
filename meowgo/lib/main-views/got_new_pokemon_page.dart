@@ -81,7 +81,7 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'You unlocked the below pokemon:',
+                    'You hatched a new Pokémon!:',
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 10),
@@ -110,7 +110,7 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
                     onPressed: () {
                       openStepCounter();
                     },
-                    child: const Text('Gather another egg!'),
+                    child: const Text('Take a walk for a bonus egg!'),
                   ),
                 ],
               ),
