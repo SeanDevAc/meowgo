@@ -127,80 +127,84 @@ class _EggDexWidgetState extends State<EggDexWidget> {
               shape: BoxShape.circle,
             ),
           ),
-          Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                margin: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 24.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5.0,
-                      offset: const Offset(0, 2),
+          Container(
+            constraints: BoxConstraints(maxWidth: 800),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 24.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5.0,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: searchController,
+                    onChanged: filterPokemon,
+                    decoration: const InputDecoration(
+                      labelText: 'Search Pokémon',
+                      prefixIcon: Icon(Icons.search),
+                      border: InputBorder.none,
                     ),
-                  ],
-                ),
-                child: TextField(
-                  controller: searchController,
-                  onChanged: filterPokemon,
-                  decoration: const InputDecoration(
-                    labelText: 'Search Pokémon',
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
                   ),
                 ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: filteredPokemonList.length,
-                  itemBuilder: (context, index) {
-                    final pokemon = filteredPokemonList[index];
-                    final isSelected = isPokemonSelected(pokemon);
-                    return GestureDetector(
-                      onTap: () {
-                        if (isSelected) {
-                          removeFromInventory(pokemon);
-                        } else {
-                          addToInventory(pokemon);
-                        }
-                      },
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 2000,
-                            margin: const EdgeInsets.all(8.0),
-                            child: PokemonWidget(pokemon: pokemon),
-                          ),
-                          if (isSelected)
-                            Positioned.fill(
-                              child: Container(
-                                color: Colors.black54,
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'Pokemon set as Party',
-                                  style: TextStyle(
-                                    color:
-                                        Colors.white, // Change the color here
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: filteredPokemonList.length,
+                    itemBuilder: (context, index) {
+                      final pokemon = filteredPokemonList[index];
+                      final isSelected = isPokemonSelected(pokemon);
+                      return GestureDetector(
+                        onTap: () {
+                          if (isSelected) {
+                            removeFromInventory(pokemon);
+                          } else {
+                            addToInventory(pokemon);
+                          }
+                        },
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 2000,
+                              margin: const EdgeInsets.all(8.0),
+                              child: PokemonWidget(pokemon: pokemon),
+                            ),
+                            if (isSelected)
+                              Positioned.fill(
+                                child: Container(
+                                  color: Colors.black54,
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Pokemon set as Party',
+                                    style: TextStyle(
+                                      color:
+                                          Colors.white, // Change the color here
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                        ],
-                      ),
-                    );
-                  },
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

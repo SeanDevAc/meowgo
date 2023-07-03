@@ -44,7 +44,15 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Pokemon!'),
+        title: const Text(
+          'New Pokemon!',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 41, 42, 42),
+        leading: const BackButton(
+          style: ButtonStyle(
+              iconColor: MaterialStatePropertyAll<Color>(Colors.white)),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -61,7 +69,7 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.height * 0.8,
               child: Column(
@@ -86,23 +94,23 @@ class _GotNewPokemonPageState extends State<GotNewPokemonPage> {
                         future: getUnlockedPokemon(randomId()),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
-                            return Text(
+                            return const Text(
                                 'An error occurred while loading the pokemon');
                           } else if (snapshot.hasData) {
                             return PokemonWidget(pokemon: snapshot.data!);
                           } else {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
                         },
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       openStepCounter();
                     },
-                    child: Text('Gather another egg!'),
+                    child: const Text('Gather another egg!'),
                   ),
                 ],
               ),

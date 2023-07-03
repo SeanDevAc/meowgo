@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './timer-widget.dart';
+import 'timer_widget.dart';
 
-import '../main-views/home-page-widget.dart';
-import '../main-views/settings-page-widget.dart';
+import '../main-views/home_page_widget.dart';
+import '../main-views/settings_page_widget.dart';
 import '../main-views/eggdex_page_widget.dart';
 
 class StudyMonStatefulWidget extends StatefulWidget {
@@ -30,7 +30,7 @@ class _StudyMonState extends State<StudyMonStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TimerStatefulWidget(),
+      appBar: const TimerStatefulWidget(),
       // AppBar(
       //   //title: pages[currentPageIndex],
       //   leading: const TimerStatefulWidget(),

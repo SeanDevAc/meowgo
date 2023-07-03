@@ -3,7 +3,7 @@ import 'package:meowgo/main-views/got_new_pokemon_page.dart';
 import 'package:meowgo/main-views/start_page_widget.dart';
 import 'package:meowgo/main-views/step_count_page.dart';
 
-import 'functionalities/nav-bar-widget.dart';
+import 'functionalities/nav_bar_widget.dart';
 
 void main() {
   runApp(
