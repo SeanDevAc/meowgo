@@ -31,7 +31,7 @@ class DatabaseHelper {
       return _database!;
     }
 
-    if (!Platform.isIOS) {
+    if (Platform.isWindows || Platform.isLinux) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
